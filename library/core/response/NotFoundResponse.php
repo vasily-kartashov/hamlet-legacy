@@ -16,7 +16,7 @@ namespace core\response
     {
         public function __construct(Entity $entity)
         {
-            Response::__construct('404 Not Found');
+            parent::__construct('404 Not Found');
             $this->setEntity($entity, true);
         }
     }

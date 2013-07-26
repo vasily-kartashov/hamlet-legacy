@@ -18,7 +18,7 @@ namespace core\response
     class OKResponse extends Response
     {
         public function __construct(Entity $entity) {
-            Response::__construct('200 OK');
+            parent::__construct('200 OK');
             $this->setEntity($entity, true);
         }
     }

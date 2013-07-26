@@ -12,7 +12,7 @@ namespace core\response
     {
         public function __construct()
         {
-            Response::__construct('403 Forbidden');
+            parent::__construct('403 Forbidden');
         }
     }
 }

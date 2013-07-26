@@ -8,7 +8,7 @@ namespace core\response
     {
         public function __construct()
         {
-            Response::__construct('412 Precondition Failed');
+            parent::__construct('412 Precondition Failed');
         }
     }
 }

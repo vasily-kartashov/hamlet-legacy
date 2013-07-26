@@ -13,7 +13,7 @@ namespace core\response
     {
         public function __construct(Entity $entity)
         {
-            Response::__construct('304 Not Modified');
+            parent::__construct('304 Not Modified');
             $this->setEntity($entity, false);
         }
     }

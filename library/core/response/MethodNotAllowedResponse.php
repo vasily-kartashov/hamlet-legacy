@@ -12,7 +12,7 @@ namespace core\response
     {
         public function __construct(array $allowedMethods)
         {
-            Response::__construct('405 Method Not Allowed');
+            parent::__construct('405 Method Not Allowed');
             $this->setHeader('Allow', join(', ', $allowedMethods));
         }
     }

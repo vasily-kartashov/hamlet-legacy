@@ -19,7 +19,7 @@ namespace core\response
     {
         public function __construct()
         {
-            Response::__construct('202 Accepted');
+            parent::__construct('202 Accepted');
         }
     }
 }

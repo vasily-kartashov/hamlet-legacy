@@ -14,7 +14,7 @@ namespace core\response
     {
         public function __construct($url)
         {
-            Response::__construct('307 Temporary Redirect');
+            parent::__construct('307 Temporary Redirect');
             $this->setHeader('Location', $url);
         }
     }

@@ -21,7 +21,7 @@ namespace core\response
     {
         public function __construct(Entity $entity)
         {
-            Response::__construct('201 Created');
+            parent::__construct('201 Created');
             // @todo add ETag to the respoinse
         }
     }

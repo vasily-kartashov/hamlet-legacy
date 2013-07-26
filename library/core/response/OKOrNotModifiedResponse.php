@@ -22,7 +22,7 @@ namespace core\response
                 $this->setStatus('304 Not Modified');
                 $this->setEmbedEntity(false);
             }
-            Response::output($request, $cache);
+            parent::output($request, $cache);
         }
     }
 }

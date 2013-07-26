@@ -24,7 +24,7 @@ namespace core\response
     {
         public function __construct($url)
         {
-            Response::__construct('301 Moved Permanently');
+            parent::__construct('301 Moved Permanently');
             $this->setHeader('Location', $url);
         }
     }

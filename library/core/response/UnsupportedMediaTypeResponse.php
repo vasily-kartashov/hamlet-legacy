@@ -12,7 +12,7 @@ namespace core\response
     {
         public function __construct()
         {
-            Response::__construct('415 Unsupported Media Type');
+            parent::__construct('415 Unsupported Media Type');
         }
     }
 }

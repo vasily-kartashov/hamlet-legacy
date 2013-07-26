@@ -21,7 +21,7 @@ namespace core\response
     {
         public function __construct($url)
         {
-            Response::__construct('303 See Other');
+            parent::__construct('303 See Other');
             $this->setHeader('Location', $url);
         }
     }

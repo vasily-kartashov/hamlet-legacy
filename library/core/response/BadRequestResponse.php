@@ -12,7 +12,7 @@ namespace core\response
     {
         public function __construct()
         {
-            Response::__construct('400 Bad Request');
+            parent::__construct('400 Bad Request');
         }
     }
 }

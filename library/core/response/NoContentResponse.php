@@ -21,7 +21,7 @@ namespace core\response
     {
         public function __construct()
         {
-            Response::__construct('204 No Content');
+            parent::__construct('204 No Content');
         }
     }
 }
