@@ -29,7 +29,7 @@ namespace core\template
             $smarty = new Smarty();
             $smarty->setCacheDir(sys_get_temp_dir());
             $smarty->setCompileDir(sys_get_temp_dir());
-            $smarty->addPluginsDir(__DIR__ . '/extensions/');
+            $smarty->addPluginsDir(__DIR__ . '/smarty-extensions/');
 
             $smarty->assign($data);
             return $smarty->fetch($this->path);
