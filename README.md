@@ -15,4 +15,4 @@ Class loader
 Example application
 --------------------
 The master branch contains a simple application for documentation purposes. The application is a simple todo list, with
-login, localizations, smarty templates, restful services, different environments and sqlite3 database.
+localizations, smarty templates, restful services and different environments.
