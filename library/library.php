@@ -4,6 +4,7 @@ spl_autoload_register(function($className) {
     static $map;
     if (!is_array($map)) {
         $map = array(
+			'application\\entity\\HomePageEntity' => __DIR__ . '/application/entity/HomePageEntity.php',
 			'application\\entity\\ItemEntity' => __DIR__ . '/application/entity/ItemEntity.php',
 			'application\\entity\\ItemsListEntity' => __DIR__ . '/application/entity/ItemsListEntity.php',
 			'application\\environment\\DefaultEnvironment' => __DIR__ . '/application/environment/DefaultEnvironment.php',

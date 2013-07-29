@@ -1,9 +1,8 @@
 <?php
 namespace application
 {
-    use application\entity\ItemsListEntity;
+    use application\entity\HomePageEntity;
     use application\environment\DefaultEnvironment;
-    use application\environment\DevelopmentEnvironment;
     use application\environment\ProductionEnvironment;
     use application\resource\ItemResource;
     use application\resource\ItemsListResource;
@@ -16,17 +15,17 @@ namespace application
     {
         protected function findResource(Request $request)
         {
+            if ($request->pathMatchesPattern('/items')) {
+                return new ItemsListResource();
+            }
+            if ($matches = $request->pathMatchesPattern('/items/{itemId}')) {
+                return new ItemResource($matches['itemId']);
+            }
             $environment = $this->getEnvironment($request);
             if ($matches = $request->pathStartsWithPattern('/{localeName}')) {
                 if ($environment->localeExists($matches['localeName'])) {
                     $locale = $environment->getLocale($matches['localeName']);
-                    if ($request->pathMatchesPattern('/*/items')) {
-                        return new ItemsListResource();
-                    }
-                    if ($matches = $request->pathMatchesPattern('/{localeName}/items/{itemId}')) {
-                        return new ItemResource($matches['itemId']);
-                    }
-                    if ($request->pathMatches('/*')) {
+                    if ($request->pathMatchesPattern('/*')) {
                         return new EntityResource(new HomePageEntity($locale));
                     }
                 }
