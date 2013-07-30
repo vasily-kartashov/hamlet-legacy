@@ -6,11 +6,11 @@ namespace application\entity
 
     class ItemsListEntity extends JSONEntity
     {
-        protected $request;
+        protected $items;
 
-        public function __construct(Request $request)
+        public function __construct(array $items)
         {
-            $this->request = $request;
+            $this->items = $items;
         }
 
         public function getKey()
@@ -20,7 +20,7 @@ namespace application\entity
 
         public function getData()
         {
-            return $this->request->getSessionParameter('items', array());
+            return $this->items;
         }
     }
 }

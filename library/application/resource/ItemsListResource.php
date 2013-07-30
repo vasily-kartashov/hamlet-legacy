@@ -1,47 +1,43 @@
 <?php
 namespace application\resource
 {
+    use application\entity\ItemEntity;
     use application\entity\ItemsListEntity;
+    use application\environment\DefaultEnvironment;
+    use core\entity\LocatedEntity;
     use core\Request;
     use core\Resource;
-    use core\response\MethodNotAllowedResponse;
-    use core\response\OKResponse;
-    use core\response\PreconditionFailedResponse;
+    use core\resource\CollectionResource;
 
-    class ItemsListResource extends Resource
+    class ItemsListResource extends CollectionResource
     {
-        private function getItems(Request $request)
+        private $environment;
+
+        public function __construct(DefaultEnvironment $environment)
         {
-            return new OKResponse(new ItemsListEntity($request));
+            $this->environment = $environment;
         }
 
-        private function addItem(Request $request, $content)
+        public function isPostRequestValid(Request $request)
         {
-            $items = $request->getSessionParameter('items', array());
-            $keys = array_keys($items);
-            $id = end($keys) + 1;
-
-            $items[$id] = $content;
-
-            $response = new OKResponse();
-            $response->setSessionParameter('items', $items);
-
-            return $response;
+            return $request->hasParameter('content');
         }
 
-        public function getResponse(Request $request)
+        protected function getCollection(Request $request)
         {
-            if ($request->getMethod() == 'GET') {
-                return $this->getItems($request);
-            }
-            if ($request->getMethod() == 'POST') {
-                $content = $request->getParameter('content');
-                if (is_null($content)) {
-                    return new PreconditionFailedResponse();
-                }
-                return $this->addItem($request, $content);
-            }
-            return new MethodNotAllowedResponse(array('GET', 'POST'));
+            $items = $this->environment->getDatabaseService()->getItems();
+            return new ItemsListEntity($items);
+        }
+
+        protected function createCollectionElement(Request $request)
+        {
+            $content = $request->getParameter('content');
+            $id = $this->environment->getDatabaseService()->insertItem($content);
+
+            $location = $this->environment->getCanonicalDomain() . '/items/' . $id;
+            $entity = new ItemEntity($id, $content);
+
+            return new LocatedEntity($location, $entity);
         }
     }
 }

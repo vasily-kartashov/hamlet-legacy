@@ -6,11 +6,13 @@ namespace application\entity
 
     class ItemEntity extends JSONEntity
     {
-        protected $item;
+        private $id;
+        private $content;
 
-        public function __construct($item)
+        public function __construct($id, $content)
         {
-            $this->item = $item;
+            $this->id = $id;
+            $this->content = $content;
         }
 
         public function getKey()
@@ -20,7 +22,10 @@ namespace application\entity
 
         public function getData()
         {
-            return $this->item;
+            return array(
+                'id' => $this->id,
+                'content' => $this->content,
+            );
         }
     }
 }

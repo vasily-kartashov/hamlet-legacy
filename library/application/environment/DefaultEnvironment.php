@@ -1,11 +1,15 @@
 <?php
 namespace application\environment
 {
+    use application\db\DatabaseService;
     use application\locale\DefaultLocale;
     use application\locale\GermanLocale;
+    use SQLite3;
 
     class DefaultEnvironment
     {
+        protected $databaseService = null;
+
         public function getCacheServerLocation()
         {
             return array('localhost', 11211);
@@ -30,6 +34,30 @@ namespace application\environment
                 case 'en':
                     return new DefaultLocale();
             }
+        }
+
+        protected function getDatabase()
+        {
+            $path = __DIR__ . '/../../../data/todo.db';
+            $databaseExists = file_exists($path);
+            $db = new SQLite3($path, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE);
+            if (!$databaseExists) {
+                $db->exec('
+                    CREATE TABLE items (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        content TEXT
+                    )
+                ');
+            }
+            return $db;
+        }
+
+        public function getDatabaseService()
+        {
+            if (is_null($this->databaseService)) {
+                $this->databaseService = new DatabaseService($this->getDatabase());
+            }
+            return $this->databaseService;
         }
     }
 }

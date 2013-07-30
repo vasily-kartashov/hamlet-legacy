@@ -4,6 +4,7 @@ spl_autoload_register(function($className) {
     static $map;
     if (!is_array($map)) {
         $map = array(
+			'application\\db\\DatabaseService' => __DIR__ . '/application/db/DatabaseService.php',
 			'application\\entity\\HomePageEntity' => __DIR__ . '/application/entity/HomePageEntity.php',
 			'application\\entity\\ItemEntity' => __DIR__ . '/application/entity/ItemEntity.php',
 			'application\\entity\\ItemsListEntity' => __DIR__ . '/application/entity/ItemsListEntity.php',
@@ -18,11 +19,14 @@ spl_autoload_register(function($className) {
 			'core\\db\\MySQLiProcedure' => __DIR__ . '/core/db/MySQLiProcedure.php',
 			'core\\entity\\HTMLEntity' => __DIR__ . '/core/entity/HTMLEntity.php',
 			'core\\entity\\JSONEntity' => __DIR__ . '/core/entity/JSONEntity.php',
+			'core\\entity\\LocatedEntity' => __DIR__ . '/core/entity/LocatedEntity.php',
 			'core\\Entity' => __DIR__ . '/core/Entity.php',
 			'core\\io\\Directory' => __DIR__ . '/core/io/Directory.php',
 			'core\\request\\CLIRequest' => __DIR__ . '/core/request/CLIRequest.php',
 			'core\\request\\WebRequest' => __DIR__ . '/core/request/WebRequest.php',
 			'core\\Request' => __DIR__ . '/core/Request.php',
+			'core\\resource\\CollectionElementResource' => __DIR__ . '/core/resource/CollectionElementResource.php',
+			'core\\resource\\CollectionResource' => __DIR__ . '/core/resource/CollectionResource.php',
 			'core\\resource\\EntityResource' => __DIR__ . '/core/resource/EntityResource.php',
 			'core\\resource\\NotFoundResource' => __DIR__ . '/core/resource/NotFoundResource.php',
 			'core\\resource\\RedirectResource' => __DIR__ . '/core/resource/RedirectResource.php',

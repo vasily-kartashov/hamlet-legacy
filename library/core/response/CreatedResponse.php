@@ -19,10 +19,13 @@ namespace core\response
      */
     class CreatedResponse extends Response
     {
-        public function __construct(Entity $entity)
+        public function __construct($url, Entity $entity = null)
         {
             parent::__construct('201 Created');
-            // @todo add ETag to the respoinse
+            $this->setHeader('Location', $url);
+            if (!is_null($entity)) {
+                $this->setEntity($entity);
+            }
         }
     }
 }

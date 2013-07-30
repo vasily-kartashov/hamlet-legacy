@@ -15,13 +15,15 @@ namespace application
     {
         protected function findResource(Request $request)
         {
+            $environment = $this->getEnvironment($request);
+
             if ($request->pathMatchesPattern('/items')) {
-                return new ItemsListResource();
+                return new ItemsListResource($environment);
             }
             if ($matches = $request->pathMatchesPattern('/items/{itemId}')) {
-                return new ItemResource($matches['itemId']);
+                return new ItemResource($environment, $matches['itemId']);
             }
-            $environment = $this->getEnvironment($request);
+
             if ($matches = $request->pathStartsWithPattern('/{localeName}')) {
                 if ($environment->localeExists($matches['localeName'])) {
                     $locale = $environment->getLocale($matches['localeName']);

@@ -2,76 +2,46 @@
 namespace application\resource
 {
     use application\entity\ItemEntity;
-    use application\entity\ItemsListEntity;
+    use application\environment\DefaultEnvironment;
     use core\Request;
     use core\Resource;
-    use core\response\MethodNotAllowedResponse;
-    use core\response\NotFoundResponse;
-    use core\response\OKResponse;
-    use core\response\PreconditionFailedResponse;
+    use core\resource\CollectionElementResource;
 
-    class ItemResource extends Resource
+    class ItemResource extends CollectionElementResource
     {
+        private $environment;
         private $itemId;
 
-        public function __construct($itemId)
+        public function __construct(DefaultEnvironment $environment, $itemId)
         {
+            $this->environment = $environment;
             $this->itemId = $itemId;
         }
 
-        private function getItem(Request $request)
+        protected function isPutRequestValid(Request $request)
         {
-            $items = $request->getSessionParameter('items', array());
-            if (!isset($items[$this->itemId])) {
-                return new NotFoundResponse(new ItemsListEntity($request));
-            }
-            return new OKResponse(new ItemEntity($items[$this->itemId]));
+            return $request->hasParameter('content');
         }
 
-        private function deleteItem(Request $request)
+        protected function collectionElementExists(Request $request)
         {
-            $items = $request->getSessionParameter('items', array());
-            if (!isset($items[$this->itemId])) {
-                return new NotFoundResponse(new ItemsListEntity($request));
-            }
-            unset($items[$this->itemId]);
-
-            $response = new OKResponse();
-            $response->setSessionParameter('items', $items);
-
-            return $response;
+            return $this->environment->getDatabaseService()->itemExists($this->itemId);
         }
 
-        private function putItem(Request $request, $content)
+        protected function deleteCollectionElement(Request $request)
         {
-            $items = $request->getSessionParameter('items', array());
-            if (!isset($items[$this->itemId])) {
-                return new NotFoundResponse(new ItemsListEntity($request));
-            }
-            $items[$this->itemId] = $content;
-
-            $response = new OKResponse();
-            $response->setSessionParameter('items', $items);
-
-            return $response;
+            $this->environment->getDatabaseService()->deleteItem($this->itemId);
         }
 
-        public function getResponse(Request $request)
+        protected function updateCollectionElement(Request $request)
         {
-            if ($request->getMethod() == 'GET') {
-                return $this->getItem($request);
-            }
-            if ($request->getMethod() == 'DELETE') {
-                return $this->deleteItem($request);
-            }
-            if ($request->getMethod() == 'PUT') {
-                $content = $request->getParameter('content');
-                if (is_null($content)) {
-                    return new PreconditionFailedResponse();
-                }
-                return $this->putItem($request, $content);
-            }
-            return new MethodNotAllowedResponse(array('GET', 'PUT', 'DELETE'));
+            $this->environment->getDatabaseService()->updateItem($this->itemId, $request->getParameter('content'));
+        }
+
+        protected function getCollectionElement(Request $request)
+        {
+            $item = $this->environment->getDatabaseService()->getItem($this->itemId);
+            return new ItemEntity($item['id'], $item['content']);
         }
     }
 }

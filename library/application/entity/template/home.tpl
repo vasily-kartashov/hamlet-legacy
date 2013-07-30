@@ -7,6 +7,6 @@
     <body>
         <h1>{$greeting}</h1>
         <ul id="items"></ul>
-        <input id="content"/><a href="#" id="submit">submit</a>
+        Add new item: <input id="content"/>
     </body>
 </html>
