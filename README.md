@@ -31,8 +31,8 @@ Directory structure
 
 Class loader
 --------------------
-
-
+The framework doesn't use any conventions for namespace to file mapping. Instead you have to generate the class loader
+by executing php utils/create-library-loader.php
 
 Example application
 --------------------
