@@ -109,8 +109,9 @@ namespace core\db
                     $callParameters[] = &$nothing;
                     $blobs[$i] = $parameter[1];
                 } else {
-                    $value = $parameter[1];
-                    $callParameters[] = &$value;
+                    name = "value{$i}";
+                    $$name = $parameter[1];
+                    $callParameters[] = &$$name;
                 }
             }
             $success = call_user_func_array(array($this->statement, 'bind_param'), $callParameters);
