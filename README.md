@@ -22,17 +22,21 @@ The framework requires Memcached PHP extension to work.
 
 Directory structure
 --------------------
-* library/application - Application code
-* library/core - Core of the framework that is required during runtime
-* library/vendors - Vendors code that that is required during runtime
+* library/{scope}/application - Application code
+* library/{scope}/core - Core of the framework that is required during runtime
+* library/{scope}/vendors - Vendors code that that is required during runtime
 * public - Public directory which is DocumentRoot in apache
 * utils - Scripts that are used during development, deployment or integration
-* utils/library - Code that us used during development, deployment or integration
+* library/build - Code that us used during development, deployment or integration
+* library/runtime - Runtime code
+* library/test - Test code
+
+The number of scopes (library/{scope}) is not limited.
 
 Class loader
 --------------------
 The framework doesn't use any conventions for namespace to file mapping. Instead you have to generate the class loader
-by executing php utils/create-library-loader.php
+by executing php utils/create-library-loader/run.php
 
 Example application
 --------------------
