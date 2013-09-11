@@ -44,7 +44,7 @@ function getDeclaredClasses($path)
         elseif ($dlm && ($tokens[$i][0] != T_NS_SEPARATOR) && ($tokens[$i][0] != T_STRING)) {
             $dlm = false;
         }
-        if (($tokens[$i - 2][0] == T_CLASS || (isset($tokens[$i - 2][1]) && $tokens[$i - 2][1] == "phpclass"))
+        if (($tokens[$i - 2][0] == T_CLASS || $tokens[$i - 2][0] == T_INTERFACE || (isset($tokens[$i - 2][1]) && ($tokens[$i - 2][1] == "phpclass" || $tokens[$i - 2][1] == "phpinterface")))
             && $tokens[$i - 1][0] == T_WHITESPACE && $tokens[$i][0] == T_STRING) {
             $class_name = $tokens[$i][1];
             if (!isset($classes[$namespace])) $classes[$namespace] = array();
