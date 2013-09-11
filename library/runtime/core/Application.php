@@ -29,6 +29,12 @@ namespace core
             return $response;
         }
 
+        /**
+         * Return cache server location, for example
+         * array('localhost', 11211)
+         * @param \core\Request $request
+         * @return array
+         */
         abstract protected function getCacheServerLocation(Request $request);
 
         /**

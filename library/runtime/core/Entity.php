@@ -28,7 +28,7 @@ namespace core
         abstract public function getMediaType();
 
         /**
-         * Get caching time in seconds
+         * Get caching time in seconds. Default caching time is 0
          * @return int
          */
         public function getCachingTime()
