@@ -14,10 +14,12 @@ namespace core\response
      */
     class NotFoundResponse extends Response
     {
-        public function __construct(Entity $entity)
+        public function __construct(Entity $entity = null)
         {
             parent::__construct('404 Not Found');
-            $this->setEntity($entity, true);
+            if (!is_null($entity)) {
+                $this->setEntity($entity);
+            }
         }
     }
 }

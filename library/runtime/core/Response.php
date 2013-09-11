@@ -81,15 +81,6 @@ namespace core
          */
         public function output(Request $request, Memcached $cache)
         {
-            header('HTTP/1.1 ' . $this->status);
-            foreach ($this->headers as $name => $content) {
-                header($name . ': ' . $content);
-            }
-
-            foreach ($this->cookies as $cookie) {
-                setcookie($cookie['name'], $cookie['value'], time() + $cookie['timeToLive'], $cookie['path']);
-            }
-
             if (count($this->session) > 0) {
                 if (!session_id()) {
                     session_start();
@@ -97,6 +88,15 @@ namespace core
                 foreach ($this->session as $name => $value) {
                     $_SESSION[$name] = $value;
                 }
+            }
+
+            header('HTTP/1.1 ' . $this->status);
+            foreach ($this->headers as $name => $content) {
+                header($name . ': ' . $content);
+            }
+
+            foreach ($this->cookies as $cookie) {
+                setcookie($cookie['name'], $cookie['value'], time() + $cookie['timeToLive'], $cookie['path']);
             }
 
             if (!is_null($this->entity)) {
@@ -158,7 +158,7 @@ namespace core
          */
         public function setSessionParameter($name, $value)
         {
-            $this->session[(string) $name] = (string) $value;
+            $this->session[(string) $name] = $value;
         }
 
         /**

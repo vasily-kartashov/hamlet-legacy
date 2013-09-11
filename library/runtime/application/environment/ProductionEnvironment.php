@@ -1,8 +1,7 @@
 <?php
 namespace application\environment
 {
-    class ProductionEnvironment extends DevelopmentEnvironment
+    class ProductionEnvironment extends DefaultEnvironment
     {
-
     }
 }

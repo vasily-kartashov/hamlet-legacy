@@ -1,0 +1,26 @@
+body
+{
+    font-family: Verdana, serif;
+    font-size: 12px;
+}
+h1
+{
+    font-size: 12px;
+}
+ul li
+{
+    line-height: 28px;
+}
+a
+{
+    margin: 0 0 0 5px;
+    padding: 3px;
+    background-color: #666666;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:hover
+{
+    background-color: #000000;
+}

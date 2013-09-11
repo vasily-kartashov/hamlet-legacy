@@ -9,10 +9,14 @@ namespace core\request
 
         public function __construct()
         {
-            $this->parameters = $_REQUEST;
             $this->serverName = $_SERVER['SERVER_NAME'];
-            $this->method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
-            $this->session = isset($_SESSION) ? $_SESSION : array();
+            $this->method = $_SERVER['REQUEST_METHOD'];
+            if ($this->method == 'GET' or $this->method == 'POST') {
+                $this->parameters = $_REQUEST;
+            } else {
+                parse_str(file_get_contents('php://input'), $this->parameters);
+            }
+
             $this->headers = getallheaders();
             $this->cookies = $_COOKIE;
             $this->ip = isset($this->headers['X-Forwarded-For']) ? $this->headers['X-Forwarded-For'] : $_SERVER['REMOTE_ADDR'];
@@ -34,6 +38,15 @@ namespace core\request
         public function getLanguageCodes()
         {
             return $this->parseHeader($this->getHeader('Accept-Language'));
+        }
+
+        public function getSessionParameter($name, $defaultValue = null)
+        {
+            if (!session_id()) {
+                session_start();
+                $this->session = isset($_SESSION) ? $_SESSION : array();
+            }
+            return parent::getSessionParameter($name, $defaultValue);
         }
     }
 }

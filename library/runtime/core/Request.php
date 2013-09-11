@@ -72,6 +72,15 @@ namespace core
         }
 
         /**
+         * @param string $name
+         * @return bool
+         */
+        public function hasParameter($name)
+        {
+            return isset($this->parameters[$name]);
+        }
+
+        /**
          * Get all request parameters
          * @return string[]
          */
