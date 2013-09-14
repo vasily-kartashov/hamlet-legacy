@@ -10,6 +10,7 @@ namespace core\db
         protected $connection;
         protected $statement;
         protected $parameters = array();
+        protected $insertId;
 
         public function __construct(mysqli $connection, $query) {
             $this->connection = $connection;
@@ -29,6 +30,11 @@ namespace core\db
             if (!$success) {
                 throw new Exception($this->connection->error);
             }
+            $this->insertId = $this->statement->insert_id;
+        }
+
+        public function getInsertId() {
+            return $this->insertId;
         }
 
         public function fetch($callback) {
@@ -109,7 +115,7 @@ namespace core\db
                     $callParameters[] = &$nothing;
                     $blobs[$i] = $parameter[1];
                 } else {
-                    name = "value{$i}";
+                    $name = "value{$i}";
                     $$name = $parameter[1];
                     $callParameters[] = &$$name;
                 }
