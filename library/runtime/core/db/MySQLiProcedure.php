@@ -12,7 +12,15 @@ namespace core\db
         protected $parameters = array();
         protected $insertId;
 
-        public function __construct(mysqli $connection, $query) {
+        /**
+         * @param mysqli $connection
+         * @param string $query
+         * @throws Exception
+         */
+        public function __construct(mysqli $connection, $query)
+        {
+            // @todo check if the connection's alive?
+            assert(is_string($query));
             $this->connection = $connection;
             $this->statement = $connection->prepare((string) $query);
             if (!$this->statement) {
@@ -20,7 +28,11 @@ namespace core\db
             }
         }
 
-        public function execute() {
+        /**
+         * @throws Exception
+         */
+        public function execute()
+        {
             $this->bindParameters();
             $success = $this->statement->execute();
             if (!$success) {
@@ -33,11 +45,16 @@ namespace core\db
             $this->insertId = $this->statement->insert_id;
         }
 
-        public function getInsertId() {
+        /**
+         * @return int|null
+         */
+        public function getInsertId()
+        {
             return $this->insertId;
         }
 
-        public function fetch($callback) {
+        public function fetch($callback)
+        {
             $row = &$this->initFetching();
             while (true) {
                 $status = $this->statement->fetch();

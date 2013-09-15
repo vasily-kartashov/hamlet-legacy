@@ -2,8 +2,7 @@
 
 namespace core\response
 {
-    use core\Entity;
-    use core\Response;
+    use core\entity\Entity;
 
     /**
      * The provider has succeeded. The information returned with the provider is dependent on the method used in the
@@ -17,6 +16,9 @@ namespace core\response
      */
     class OKResponse extends Response
     {
+        /**
+         * @param Entity $entity
+         */
         public function __construct(Entity $entity = null) {
             parent::__construct('200 OK');
             if (!is_null($entity)) {

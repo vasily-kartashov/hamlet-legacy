@@ -1,8 +1,9 @@
 <?php
 namespace core\resource
 {
-    use core\Request;
-    use core\Resource;
+    use core\entity\Entity;
+    use core\entity\LocatedEntity;
+    use core\request\Request;
     use core\response\CreatedResponse;
     use core\response\MethodNotAllowedResponse;
     use core\response\OKORNotModifiedResponse;
@@ -11,28 +12,28 @@ namespace core\resource
     abstract class CollectionResource extends Resource
     {
         /**
-         * @param \core\Request $request
-         * @return \core\Entity
+         * @param Request $request
+         * @return Entity
          */
         abstract protected function getCollection(Request $request);
 
         /**
          * Returns an array with url of the newly created item as well as the entity for this element
          *
-         * @param \core\Request $request
-         * @return \core\entity\LocatedEntity
+         * @param Request $request
+         * @return LocatedEntity
          */
         abstract protected function createCollectionElement(Request $request);
 
         /**
-         * @param \core\Request $request
+         * @param Request $request
          * @return bool
          */
         abstract protected function isPostRequestValid(Request $request);
 
         /**
-         * @param \core\Request $request
-         * @return \core\Response
+         * @param Request $request
+         * @return CreatedResponse|MethodNotAllowedResponse|OKORNotModifiedResponse|PreconditionFailedResponse
          */
         public function getResponse(Request $request)
         {
@@ -46,7 +47,7 @@ namespace core\resource
                 $locatedEntity = $this->createCollectionElement($request);
                 return new CreatedResponse($locatedEntity->getLocation(), $locatedEntity->getEntity());
             }
-            return new MethodNotAllowedResponse(array('GET', 'POST'));
+            return new MethodNotAllowedResponse(['GET', 'POST']);
         }
     }
 }

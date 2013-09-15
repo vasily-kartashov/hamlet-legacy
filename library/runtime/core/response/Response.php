@@ -1,8 +1,8 @@
 <?php
 
-namespace core
+namespace core\response
 {
-    use core\Entity;
+    use core\entity\Entity;
     use Memcached;
 
     /**
@@ -17,7 +17,7 @@ namespace core
         /** @var string[] */
         protected $headers = array();
 
-        /** @var \core\Entity */
+        /** @var \core\entity\Entity */
         protected $entity = null;
 
         /** @var bool */
@@ -58,7 +58,7 @@ namespace core
 
         /**
          * Set response entity
-         * @param \core\Entity $entity
+         * @param Entity $entity
          */
         protected function setEntity(Entity $entity)
         {

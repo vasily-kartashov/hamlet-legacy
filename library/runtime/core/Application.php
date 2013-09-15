@@ -1,8 +1,8 @@
 <?php
 namespace core
 {
-    use core\Request;
-    use core\Response;
+    use core\request\Request;
+    use core\response\Response;
     use Memcached;
 
     abstract class Application
@@ -12,15 +12,15 @@ namespace core
 
         /**
          * Find requested resource
-         * @param \core\Request $request
-         * @return \core\Resource
+         * @param Request $request
+         * @return \core\resource\Resource
          */
         abstract protected function findResource(Request $request);
 
         /**
          * Find response for the specified request
-         * @param \core\Request $request
-         * @return \core\Response
+         * @param Request $request
+         * @return Response
          */
         public function run(Request $request)
         {
@@ -32,15 +32,15 @@ namespace core
         /**
          * Return cache server location, for example
          * array('localhost', 11211)
-         * @param \core\Request $request
+         * @param Request $request
          * @return array
          */
         abstract protected function getCacheServerLocation(Request $request);
 
         /**
          * Return the connection to memcached server
-         * @param \core\Request $request
-         * @return \Memcached
+         * @param Request $request
+         * @return Memcached
          */
         protected function getCache(Request $request)
         {
@@ -54,8 +54,8 @@ namespace core
 
         /**
          * Output the response to the standard output stream
-         * @param \core\Request $request
-         * @param \core\Response $response
+         * @param Request $request
+         * @param Response $response
          * @return void
          */
         public function output(Request $request, Response $response)

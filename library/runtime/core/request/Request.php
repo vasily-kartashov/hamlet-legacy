@@ -1,7 +1,7 @@
 <?php
-namespace core
+namespace core\request
 {
-    use core\Entity;
+    use core\entity\Entity;
     use Memcached;
 
     abstract class Request
@@ -36,6 +36,7 @@ namespace core
          */
         public function getHeader($name)
         {
+            assert(is_string($name));
             if (isset($this->headers[$name])) {
                 return $this->headers[$name];
             }
@@ -65,6 +66,7 @@ namespace core
          */
         public function getParameter($name, $defaultValue = null)
         {
+            assert(is_string($name));
             if (isset($this->parameters[$name])) {
                 return $this->parameters[$name];
             }
@@ -77,6 +79,7 @@ namespace core
          */
         public function hasParameter($name)
         {
+            assert(is_string($name));
             return isset($this->parameters[$name]);
         }
 
@@ -96,6 +99,7 @@ namespace core
          */
         public function pathStartsWith($prefix)
         {
+            assert(is_string($prefix));
             $length = strlen($prefix);
             return substr($this->path, 0, $length) == $prefix;
         }
@@ -108,6 +112,7 @@ namespace core
          */
         public function pathStartsWithPattern($pattern)
         {
+            assert(is_string($pattern));
             $pathTokens = explode('/', $this->path);
             $patternTokens = explode('/', $pattern);
             return $this->matchTokens($pathTokens, $patternTokens);
@@ -120,6 +125,7 @@ namespace core
          */
         public function pathMatches($path)
         {
+            assert(is_string($path));
             return $this->path == (string) $path;
         }
 
@@ -131,6 +137,7 @@ namespace core
          */
         public function pathMatchesPattern($pattern)
         {
+            assert(is_string($pattern));
             $pathTokens = explode('/', $this->path);
             $patternTokens = explode('/', $pattern);
             if (count($pathTokens) != count($patternTokens)) {
@@ -174,6 +181,7 @@ namespace core
          */
         public function pathMatchesRegExp($pattern)
         {
+            assert(is_string($pattern));
             $re = '#' . preg_replace('/\{([^\}]+)\}/', '(?<\1>[^\}]+)', $pattern) . '(\.(\w+)($|\?))?#';
             if (preg_match($re, $this->path, $matches)) {
                 $result = array();
@@ -195,6 +203,7 @@ namespace core
          */
         public function getSessionParameter($name, $defaultValue = null)
         {
+            assert(is_string($name));
             if (isset($this->session[$name])) {
                 return $this->session[$name];
             }
@@ -203,8 +212,8 @@ namespace core
 
         /**
          * Check if the request precondition is fulfilled
-         * @param \core\Entity $entity
-         * @param \Memcached $cache
+         * @param Entity $entity
+         * @param Memcached $cache
          * @return bool
          */
         public function preconditionFulfilled(Entity $entity, Memcached $cache)
@@ -255,7 +264,9 @@ namespace core
          * @param string $headerString
          * @return string[]
          */
-        protected function parseHeader($headerString) {
+        protected function parseHeader($headerString)
+        {
+            assert(is_string($headerString));
             $ranges = explode(',', trim(strtolower($headerString)));
             foreach ($ranges as $i => $range) {
                 $tokens = explode(';', trim($range), 2);
@@ -285,6 +296,7 @@ namespace core
          */
         public function getCookie($name, $defaultValue = null)
         {
+            assert(is_string($name));
             if (isset($this->cookies[$name])) {
                 return $this->cookies[$name];
             }

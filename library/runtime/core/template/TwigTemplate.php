@@ -1,7 +1,6 @@
 <?php
 namespace core\template
 {
-    use core\Template;
     use Twig_Environment;
     use Twig_Loader_Filesystem;
 
@@ -16,6 +15,8 @@ namespace core\template
          */
         public function __construct($data, $path)
         {
+            assert(!is_null($data));
+            assert(is_string($path) and file_exists($path));
             Template::__construct($data);
             $this->path = $path;
         }
@@ -33,7 +34,7 @@ namespace core\template
 
         /**
          * Get Twig environment
-         * @return \Twig_Environment
+         * @return Twig_Environment
          */
         protected function getEnvironment()
         {

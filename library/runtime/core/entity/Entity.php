@@ -1,5 +1,5 @@
 <?php
-namespace core
+namespace core\entity
 {
     use core\Request;
     use Memcached;

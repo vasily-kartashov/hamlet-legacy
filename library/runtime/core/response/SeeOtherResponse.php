@@ -2,8 +2,6 @@
 
 namespace core\response
 {
-    use core\Response;
-
     /**
      * The provider to the provider can be found under a different URI and SHOULD be retrieved using a GET method on that
      * resource. This method exists primarily to allow the output of a POST-activated script to redirect the user agent
@@ -19,8 +17,12 @@ namespace core\response
      */
     class SeeOtherResponse extends Response
     {
+        /**
+         * @param string $url
+         */
         public function __construct($url)
         {
+            assert(is_string($url));
             parent::__construct('303 See Other');
             $this->setHeader('Location', $url);
         }

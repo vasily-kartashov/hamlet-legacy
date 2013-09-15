@@ -8,7 +8,7 @@ namespace application\repository
 
     class StoragesRepository
     {
-        /** @var \mysqli */
+        /** @var mysqli */
         private $database;
 
         /**

@@ -2,8 +2,7 @@
 
 namespace core\response
 {
-    use core\Entity;
-    use core\Response;
+    use core\entity\Entity;
 
     /**
      * The server has not found anything matching the Request-URI. No indication is given of whether the condition is
@@ -14,6 +13,9 @@ namespace core\response
      */
     class NotFoundResponse extends Response
     {
+        /**
+         * @param Entity $entity
+         */
         public function __construct(Entity $entity = null)
         {
             parent::__construct('404 Not Found');

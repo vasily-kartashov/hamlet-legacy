@@ -1,8 +1,7 @@
 <?php
 namespace core\response
 {
-    use core\Entity;
-    use core\Response;
+    use core\entity\Entity;
 
     /**
      * Indicates that the resource has not been modified since the version specified by the request headers
@@ -11,6 +10,9 @@ namespace core\response
      */
     class NotModifiedResponse extends Response
     {
+        /**
+         * @param Entity $entity
+         */
         public function __construct(Entity $entity)
         {
             parent::__construct('304 Not Modified');

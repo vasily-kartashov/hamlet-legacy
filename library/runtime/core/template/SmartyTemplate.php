@@ -2,7 +2,6 @@
 namespace core\template
 {
     use Smarty;
-    use core\Template;
 
     class SmartyTemplate extends Template
     {
@@ -15,6 +14,8 @@ namespace core\template
          */
         public function __construct($data, $path)
         {
+            assert(!is_null($data));
+            assert(is_string($path) and file_exists($path));
             Template::__construct($data);
             $this->path = $path;
         }

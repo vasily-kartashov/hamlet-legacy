@@ -1,8 +1,6 @@
 <?php
 namespace core\request
 {
-    use core\Request;
-
     class WebRequest extends Request
     {
         protected $serverName;
@@ -30,18 +28,30 @@ namespace core\request
             }
         }
 
+        /**
+         * @return string
+         */
         public function getEnvironmentName()
         {
             return $this->serverName;
         }
 
+        /**
+         * @return string[]
+         */
         public function getLanguageCodes()
         {
             return $this->parseHeader($this->getHeader('Accept-Language'));
         }
 
+        /**
+         * @param string $name
+         * @param mixed $defaultValue
+         * @return string
+         */
         public function getSessionParameter($name, $defaultValue = null)
         {
+            assert(is_string($name));
             if (!session_id()) {
                 session_start();
                 $this->session = isset($_SESSION) ? $_SESSION : array();

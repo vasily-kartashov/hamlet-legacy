@@ -1,8 +1,7 @@
 <?php
 namespace core\resource
 {
-    use core\Request;
-    use core\Resource;
+    use core\request\Request;
     use core\response\MethodNotAllowedResponse;
     use core\response\TemporaryRedirectResponse;
 
@@ -10,11 +9,19 @@ namespace core\resource
     {
         protected $url;
 
+        /**
+         * @param string $url
+         */
         public function __construct($url)
         {
+            assert(is_string($url));
             $this->url = $url;
         }
 
+        /**
+         * @param Request $request
+         * @return MethodNotAllowedResponse|TemporaryRedirectResponse
+         */
         public function getResponse(Request $request)
         {
             if ($request->getMethod() == 'GET') {

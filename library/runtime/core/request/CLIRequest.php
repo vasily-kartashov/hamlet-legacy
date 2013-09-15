@@ -1,8 +1,6 @@
 <?php
 namespace core\request
 {
-    use core\Request;
-
     class CLIRequest extends Request
     {
         protected $environment;

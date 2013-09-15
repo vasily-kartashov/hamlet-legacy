@@ -1,8 +1,6 @@
 <?php
 namespace core\response
 {
-    use core\Response;
-
     /**
      * Indicates that the resource requested is no longer available and will not be available again. This should be used
      * when a resource has been intentionally removed and the resource should be purged. Upon receiving a 410 status

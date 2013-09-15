@@ -1,7 +1,7 @@
 <?php
 namespace core\entity
 {
-    use core\Entity;
+    use core\entity\Entity;
     use core\Request;
 
     abstract class JSONEntity extends Entity

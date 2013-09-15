@@ -1,7 +1,7 @@
 <?php
 namespace core\entity
 {
-    use core\Entity;
+    use core\entity\Entity;
 
     class LocatedEntity
     {

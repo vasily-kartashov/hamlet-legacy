@@ -18,5 +18,14 @@ namespace core\entity
         {
             return $this->data;
         }
+
+        /**
+         * Get the entity key, still important for 304 to use proper key
+         * @return string
+         */
+        public function getKey()
+        {
+            return md5(json_encode($this->data));
+        }
     }
 }

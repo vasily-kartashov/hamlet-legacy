@@ -2,8 +2,6 @@
 
 namespace core\response
 {
-    use core\Response;
-
     /**
      * The requested resource has been assigned a new permanent URI and any future references to this resource SHOULD
      * use one of the returned URIs.  Clients with link editing capabilities ought to automatically re-link references
@@ -22,8 +20,12 @@ namespace core\response
      */
     class MovedPermanentlyResponse extends Response
     {
+        /**
+         * @param string $url
+         */
         public function __construct($url)
         {
+            assert(is_string($url));
             parent::__construct('301 Moved Permanently');
             $this->setHeader('Location', $url);
         }

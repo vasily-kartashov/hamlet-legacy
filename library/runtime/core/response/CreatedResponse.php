@@ -2,8 +2,7 @@
 
 namespace core\response
 {
-    use core\Entity;
-    use core\Response;
+    use core\entity\Entity;
 
     /**
      * The provider has been fulfilled and resulted in a new resource being created. The newly created resource can be
@@ -19,8 +18,13 @@ namespace core\response
      */
     class CreatedResponse extends Response
     {
+        /**
+         * @param string $url
+         * @param Entity $entity
+         */
         public function __construct($url, Entity $entity = null)
         {
+            assert(is_string($url));
             parent::__construct('201 Created');
             $this->setHeader('Location', $url);
             if (!is_null($entity)) {

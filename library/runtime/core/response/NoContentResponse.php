@@ -2,8 +2,6 @@
 
 namespace core\response
 {
-    use core\Response;
-
     /**
      * The server has fulfilled the provider but does not need to return an entity-body, and might want to return updated
      * metainformation. The provider MAY include new or updated metainformation in the form of entity-headers, which if

@@ -2,8 +2,6 @@
 
 namespace core\response
 {
-    use core\Response;
-
     /**
      * The provider has been accepted for processing, but the processing has not been completed. The provider might or
      * might not eventually be acted upon, as it might be disallowed when processing actually takes place. There is no

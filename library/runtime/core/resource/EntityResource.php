@@ -1,9 +1,8 @@
 <?php
 namespace core\resource
 {
-    use core\Entity;
-    use core\Request;
-    use core\Resource;
+    use core\entity\Entity;
+    use core\request\Request;
     use core\response\MethodNotAllowedResponse;
     use core\response\OKORNotModifiedResponse;
 
@@ -11,11 +10,18 @@ namespace core\resource
     {
         protected $entity;
 
+        /**
+         * @param Entity $entity
+         */
         public function __construct(Entity $entity)
         {
             $this->entity = $entity;
         }
 
+        /**
+         * @param Request $request
+         * @return MethodNotAllowedResponse|OKORNotModifiedResponse
+         */
         public function getResponse(Request $request)
         {
             if ($request->getMethod() == 'GET') {

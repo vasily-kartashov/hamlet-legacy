@@ -1,8 +1,8 @@
 <?php
 namespace core\resource
 {
-    use core\Request;
-    use core\Resource;
+    use core\request\Request;
+    use core\entity\Entity;
     use core\response\MethodNotAllowedResponse;
     use core\response\NoContentResponse;
     use core\response\NotFoundResponse;
@@ -19,7 +19,7 @@ namespace core\resource
 
         /**
          * @param Request $request
-         * @return \core\Entity
+         * @return Entity
          */
         abstract protected function getCollectionElement(Request $request);
 
@@ -61,7 +61,7 @@ namespace core\resource
                 $entity = $this->getCollectionElement($request);
                 return new OKORNotModifiedResponse($entity, $request);
             }
-            return new MethodNotAllowedResponse(array('GET', 'PUT', 'DELETE'));
+            return new MethodNotAllowedResponse(['GET', 'PUT', 'DELETE']);
         }
     }
 }
