@@ -9,12 +9,12 @@ namespace application\task
 
         protected function getClientId()
         {
-            return '671582737219.apps.googleusercontent.com';
+            return 'REPLACE_WITH_CLIENT_ID';
         }
 
         protected function getClientSecret()
         {
-            return '_fY-SQgeXI7KbsJ2zMBo8IwO';
+            return 'REPLACE_WITH_CLIENT_SECRET';
         }
 
 
