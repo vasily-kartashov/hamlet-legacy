@@ -82,6 +82,7 @@ namespace core\response
          */
         public function output(Request $request, Memcached $cache)
         {
+
             if (count($this->session) > 0) {
                 if (!session_id()) {
                     session_start();
@@ -170,6 +171,14 @@ namespace core\response
         protected function formatTimestamp($timestamp)
         {
             return gmdate('D, d M Y H:i:s', $timestamp) . ' GMT';
+        }
+
+        /**         *
+         * @return Entity|null
+         */
+        public function getEntity()
+        {
+            return $this->entity;
         }
     }
 }

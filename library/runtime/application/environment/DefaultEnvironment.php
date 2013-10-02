@@ -2,8 +2,7 @@
 namespace application\environment
 {
     use application\db\DatabaseService;
-    use application\locale\DefaultLocale;
-    use application\locale\GermanLocale;
+    use application\locale\Locale;
     use SQLite3;
 
     class DefaultEnvironment
@@ -25,15 +24,53 @@ namespace application\environment
             return $localeName == 'en' or $localeName == 'de';
         }
 
+        public function getLocaleNames()
+        {
+            return array(
+                'int' => 'en',
+                'en' => 'en',
+                'gb' => 'en-gb',
+                'us' => 'en-us',
+                'au' => 'en-au',
+                'at' => 'de-at',
+                'be-nl' => 'nl-be',
+                'be-fr' => 'fr-be',
+                'br' => 'pt-br',
+                'ca-en' => 'en-ca',
+                'ca-fr' => 'fr-ca',
+                'cn' => 'zh-cn',
+                'cz' => 'cs-cz',
+                'fr' => 'fr-fr',
+                'de' => 'de-de',
+                'in' => 'en-in',
+                'it' => 'it-it',
+                'jp' => 'ja-jp',
+                'me-ar' => 'ar',
+                'me-en' => 'en',
+                'nl' => 'nl-nl',
+                'pt' => 'pt-pt',
+                'ru' => 'ru-ru',
+                'za' => 'en-za',
+                'es' => 'es-es',
+                'ch-fr' => 'fr-ch',
+                'ch-de' => 'de-ch',
+            );
+        }
+
+
+
         public function getLocale($localeName)
         {
-            switch ($localeName) {
-                case 'de':
-                    return new GermanLocale();
-                default:
-                case 'en':
-                    return new DefaultLocale();
+            $data = array();
+            if ($this->localeExists($localeName)) {
+                $localePath = __DIR__ . '/../data/locale/' . $localeName . '.php';
+                if (file_exists($localePath)) {
+                    /** @noinspection PhpIncludeInspection */
+                    $data = require($localePath);
+                }
             }
+            $localeNames = $this->getLocaleNames();
+            return new Locale($data,$localeNames[$localeName]);
         }
 
         protected function getDatabase()

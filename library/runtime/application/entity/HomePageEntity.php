@@ -1,23 +1,23 @@
 <?php
 namespace application\entity
 {
-    use application\locale\DefaultLocale;
+    use application\locale\Locale;
     use core\entity\HTMLEntity;
 
-    class HomePageEntity extends HTMLEntity
+    class HomePageEntity extends BasePageEntity
     {
         protected $locale;
 
-        public function __construct(DefaultLocale $locale)
+        public function __construct(Locale $locale)
         {
             $this->locale = $locale;
         }
 
         public function getTemplateData()
         {
-            return array(
-                'greeting' => $this->locale->getGreeting('User'),
-            );
+            $data = parent::getTemplateData();
+            $data['greeting'] = $this->locale->translate('token-hello');
+            return $data;
         }
 
         public function getTemplatePath()

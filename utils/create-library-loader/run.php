@@ -61,7 +61,7 @@ function getAllPHPFiles($rootPath)
     return new RegexIterator($iterator, '/^.+\.php$/i', RecursiveRegexIterator::GET_MATCH);
 }
 
-function buildClassMap($rootPath, $scope)
+function buildClassMap($rootPath,$scope)
 {
     $offset = strlen($rootPath);
 
@@ -69,7 +69,7 @@ function buildClassMap($rootPath, $scope)
     foreach (getAllPHPFiles($rootPath) as $pathInfo) {
         $path = $pathInfo[0];
         $relativePath = str_replace('\\', '/', substr($path, $offset));
-        $includePath = '__DIR__ . \'/' . $scope . $relativePath . '\'';
+        $includePath = '__DIR__ . \'/' . $scope .  $relativePath . '\'';
 
         $classInfo = getDeclaredClasses($path);
         foreach ($classInfo as $namespace => $classes) {
@@ -94,6 +94,7 @@ foreach ($iterator as $file) {
     if($file->isDir() and !$file->isDot()) {
         $scope = $file->getBasename();
         $scopedLibraryPath = $libraryRootPath . '/' . $scope;
-        generateLibrary(buildClassMap($scopedLibraryPath, $scope), $libraryRootPath, $scope);
+        $classMap = buildClassMap($scopedLibraryPath,$scope);
+        generateLibrary($classMap, $libraryRootPath, $scope);
     }
 }

@@ -4,8 +4,6 @@ namespace application
     use application\entity\HomePageEntity;
     use application\environment\DefaultEnvironment;
     use application\environment\ProductionEnvironment;
-    use application\resource\ItemResource;
-    use application\resource\ItemsListResource;
     use core\Application;
     use core\request\Request;
     use core\resource\EntityResource;
@@ -17,15 +15,6 @@ namespace application
         {
             $environment = $this->getEnvironment($request);
 
-            if ($request->pathMatchesPattern('/items')) {
-                return new ItemsListResource($environment);
-            }
-            if ($matches = $request->pathMatchesPattern('/items/{itemId}')) {
-                return new ItemResource($environment, $matches['itemId']);
-            }
-            if ($matches = $request->pathMatchesPattern('/items/{itemId}/{operation}')) {
-                return new ItemResource($environment, $matches['itemId'], $matches['operation']);
-            }
             if ($matches = $request->pathStartsWithPattern('/{localeName}')) {
                 if ($environment->localeExists($matches['localeName'])) {
                     $locale = $environment->getLocale($matches['localeName']);
@@ -34,7 +23,7 @@ namespace application
                     }
                 }
             }
-            return new RedirectResource($environment->getCanonicalDomain() . '/en');
+            return new RedirectResource('http://' . $request->getEnvironmentName() . '/en');
         }
 
         protected function getCacheServerLocation(Request $request)

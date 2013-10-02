@@ -29,7 +29,7 @@ namespace core\resource
          * @param Request $request
          * @return bool
          */
-        abstract protected function isPutRequestValid(Request $request);
+        abstract protected function isPostRequestValid(Request $request);
 
         /**
          * @param Request $request
@@ -40,14 +40,14 @@ namespace core\resource
             if ($request->getMethod() == 'GET') {
                 return new OKORNotModifiedResponse($this->getCollection($request), $request);
             }
-            if ($request->getMethod() == 'PUT') {
-                if (!$this->isPutRequestValid($request)) {
+            if ($request->getMethod() == 'POST') {
+                if (!$this->isPostRequestValid($request)) {
                     return new PreconditionFailedResponse();
                 }
                 $locatedEntity = $this->createCollectionElement($request);
                 return new CreatedResponse($locatedEntity->getLocation(), $locatedEntity->getEntity());
             }
-            return new MethodNotAllowedResponse(['GET', 'PUT']);
+            return new MethodNotAllowedResponse(array('GET', 'POST'));
         }
     }
 }
