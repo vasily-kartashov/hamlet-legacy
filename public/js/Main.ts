@@ -27,7 +27,7 @@ module Views {
             $(this.el).append(li);
         }
         private _addItems(items: Service.Item[]) {
-            for (var i in items) {
+            for (var i = 0, l = items.length; i < l; i++) {
                 this._addItem(items[i]);
             }
         }
@@ -87,32 +87,12 @@ module Service {
 }
 
 $(document).ready(function() {
-    var documentView = <Views.Document> ScopeBuilder.create(document);
+    var documentView = <Views.Document> Application.init(this);
     console.log(documentView);
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module ScopeBuilder {
-    export class Scope {
+module Application {
+    class Scope {
         private className: string;
         private names: {
             [name: string]: any;
@@ -129,7 +109,6 @@ module ScopeBuilder {
                         var name = this.namesOrder[i];
                         var argument: any;
                         if (name.substr(-2, 2) == '[]') {
-                            var scopes = this.names[name];
                             argument = [];
                             for (var j = 0, m = this.names[name].length; j < m; j++) {
                                 argument.push((<Scope> this.names[name][j]).init());
@@ -142,19 +121,22 @@ module ScopeBuilder {
                         }
                         arguments.push(argument);
                     }
-                    var root: any = window;
+                    var currentNamespace: any = window;
                     var namespaces = this.className.split('.');
                     for (var i = 0, l = namespaces.length; i < l; i++) {
-                        root = root[namespaces[i]];
+                        if (namespaces[i] in currentNamespace) {
+                            currentNamespace = currentNamespace[namespaces[i]];
+                        } else {
+                            throw "Namespace '" + namespaces[i] + "' not defined in '" + this.className + "'";
+                        }
                     }
-                    this.object = Object.create(root.prototype);
+                    this.object = Object.create(currentNamespace.prototype);
                     this.object.constructor.apply(this.object, arguments);
                 }
             }
             return this.object;
         }
         public addName(name: string, scope: Scope) {
-            var n = name.substr(0, name.length - 2);
             if (!(name in this.names)) {
                 if (this.parent) {
                     this.parent.addName(name, scope);
@@ -176,10 +158,8 @@ module ScopeBuilder {
             if (initCode) {
                 var position = initCode.indexOf('(');
                 this.className = initCode.substr(0, position);
-
                 var suffix = initCode.substr(position + 1).trim();
                 var names = suffix.substring(0, suffix.length - 1).split(',');
-
                 for (var i = 0, l = names.length; i < l; i++) {
                     var name = names[i];
                     if (name.substr(-2, 2) == '[]') {
@@ -195,7 +175,7 @@ module ScopeBuilder {
             }
         }
     }
-    export function create(document: HTMLDocument): any {
+    export function init(document: HTMLDocument): any {
         var process = function(node: Node, scope: Scope = null): Scope {
             if (node.nodeType != 1) {
                 return scope;
@@ -208,12 +188,10 @@ module ScopeBuilder {
             }
             var childNodes: NodeList = element.childNodes;
             for (var i = 0, l = childNodes.length; i < l; i++) {
-                process(<HTMLElement> childNodes.item(i), scope);
+                process(childNodes.item(i), scope);
             }
             return scope;
-        }
+        };
         return process(document.body).init();
     }
 }
-
-

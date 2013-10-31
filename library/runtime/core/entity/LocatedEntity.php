@@ -1,8 +1,6 @@
 <?php
 namespace core\entity
 {
-    use core\entity\Entity;
-
     class LocatedEntity
     {
         protected $location;
