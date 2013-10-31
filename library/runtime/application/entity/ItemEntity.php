@@ -8,11 +8,13 @@ namespace application\entity
     {
         private $id;
         private $content;
+        private $done;
 
-        public function __construct($id, $content)
+        public function __construct($id, $content, $done)
         {
             $this->id = $id;
-            $this->content = $content;
+            $this->content = (string) $content;
+            $this->done = (bool) $done;
         }
 
         public function getKey()
@@ -25,6 +27,7 @@ namespace application\entity
             return array(
                 'id' => $this->id,
                 'content' => $this->content,
+                'done' => $this->done,
             );
         }
     }

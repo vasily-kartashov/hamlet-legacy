@@ -46,11 +46,11 @@ namespace core\resource
             if (!$this->collectionElementExists($request)) {
                 return new NotFoundResponse();
             }
-            if ($request->getMethod() == 'DELETE' or $request->getParameter('_method' == 'DELETE')) {
+            if ($request->getMethod() == 'DELETE' or $request->getParameter('_method') == 'DELETE') {
                 $this->deleteCollectionElement($request);
                 return new NoContentResponse();
             }
-            if ($request->getMethod() == 'PUT' or $request->getParameter('_method') == 'PUT') {
+            if ($request->getMethod() == 'POST' or $request->getParameter('_method') == 'POST') {
                 if (!$this->isPutRequestValid($request)) {
                     return new PreconditionFailedResponse();
                 }

@@ -7,20 +7,11 @@ h1
 {
     font-size: 12px;
 }
-ul li
+li
 {
     line-height: 28px;
+    cursor: hand;
 }
-a
-{
-    margin: 0 0 0 5px;
-    padding: 3px;
-    background-color: #666666;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-a:hover
-{
-    background-color: #000000;
+li.done {
+    text-decoration: line-through;
 }

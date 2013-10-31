@@ -38,14 +38,15 @@ namespace application\environment
 
         protected function getDatabase()
         {
-            $path = __DIR__ . '/../../../data/todo.db';
+            $path = __DIR__ . '/../../../../data/todo.db';
             $databaseExists = file_exists($path);
             $db = new SQLite3($path, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE);
             if (!$databaseExists) {
                 $db->exec('
                     CREATE TABLE items (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        content TEXT
+                        content TEXT,
+                        done INTEGER
                     )
                 ');
             }

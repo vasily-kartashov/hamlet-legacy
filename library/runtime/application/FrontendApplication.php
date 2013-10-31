@@ -23,7 +23,9 @@ namespace application
             if ($matches = $request->pathMatchesPattern('/items/{itemId}')) {
                 return new ItemResource($environment, $matches['itemId']);
             }
-
+            if ($matches = $request->pathMatchesPattern('/items/{itemId}/{operation}')) {
+                return new ItemResource($environment, $matches['itemId'], $matches['operation']);
+            }
             if ($matches = $request->pathStartsWithPattern('/{localeName}')) {
                 if ($environment->localeExists($matches['localeName'])) {
                     $locale = $environment->getLocale($matches['localeName']);

@@ -68,7 +68,7 @@ namespace core\request
         {
             assert(is_string($name));
             if (isset($this->parameters[$name])) {
-                return $this->parameters[$name];
+                return urldecode($this->parameters[$name]);
             }
             return $defaultValue;
         }

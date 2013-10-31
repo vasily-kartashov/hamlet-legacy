@@ -17,7 +17,7 @@ namespace application\resource
             $this->environment = $environment;
         }
 
-        public function isPostRequestValid(Request $request)
+        public function isPutRequestValid(Request $request)
         {
             return $request->hasParameter('content');
         }
@@ -31,10 +31,10 @@ namespace application\resource
         protected function createCollectionElement(Request $request)
         {
             $content = $request->getParameter('content');
-            $id = $this->environment->getDatabaseService()->insertItem($content);
+            $id = $this->environment->getDatabaseService()->insertItem($content, false);
 
             $location = $this->environment->getCanonicalDomain() . '/items/' . $id;
-            $entity = new ItemEntity($id, $content);
+            $entity = new ItemEntity($id, $content, false);
 
             return new LocatedEntity($location, $entity);
         }

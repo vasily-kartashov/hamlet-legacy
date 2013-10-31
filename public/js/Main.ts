@@ -17,9 +17,28 @@ class LabelView {
 }
 
 class TodoListView {
-    constructor(private el: HTMLUListElement, private items: HTMLLIElement[]) {}
+    private service: Service;
+    constructor(private el: HTMLUListElement) {
+        this.service = new Service();
+        this.service.getItems(this, this._addItems);
+    }
+    private _addItem(item: Item) {
+        var li = $('<li/>').text(item.content).attr('data-id', item.id).toggleClass('done', item.done);
+        var _this = this;
+        li.click(function() {
+            _this.service.updateStatus(item.id, $(this).hasClass('done'), this, function() {
+                $(this).toggleClass('done');
+            });
+        });
+        $(this.el).append(li);
+    }
+    private _addItems(items: Item[]) {
+        for (var i in items) {
+            this._addItem(items[i]);
+        }
+    }
     public addItem(value: string) {
-        $(this.el).append($('<li/>').text(value));
+        this.service.addItem(value, this, this._addItem);
     }
 }
 
@@ -35,9 +54,52 @@ class TextBoxView {
     }
 }
 
+
+
+
+
+interface Item {
+    id: number;
+    content: string;
+    done: boolean;
+}
+
+class Service {
+    constructor() {}
+    public getItems(scope: any, callback: (items: Item[]) => void) {
+        $.ajax({
+            url: '/items',
+            method: 'GET',
+            success: function(items: Item[]) {
+                callback.call(scope, items);
+            }
+        });
+    }
+    public addItem(content: string, scope: any, callback: (item: Item) => void) {
+        $.ajax({
+            url: '/items',
+            method: 'PUT',
+            data: {
+                content: content
+            },
+            success: function(item: Item) {
+                callback.call(scope, item);
+            }
+        });
+    }
+    public updateStatus(id: number, done: boolean, scope: any, callback: () => void) {
+        $.ajax({
+            url: '/items/' + id.toString() + '/' + (done? 'undo' : 'do'),
+            method: 'POST',
+            success: function() {
+                callback.call(scope);
+            }
+        })
+    }
+}
+
 $(document).ready(function() {
     var documentView = <DocumentView> ScopeBuilder.create(document);
-    documentView.getLabel().setValue("Hey there");
     console.log(documentView);
 });
 
@@ -85,6 +147,9 @@ module ScopeBuilder {
                                 argument.push((<Scope> this.names[name][j]).init());
                             }
                         } else {
+                            if (this.names[name] == null) {
+                                throw "Name " + name + " is not initialized in the scope";
+                            }
                             argument = (<Scope> this.names[name]).init();
                         }
                         arguments.push(argument);
@@ -101,7 +166,7 @@ module ScopeBuilder {
                 if (this.parent) {
                     this.parent.addName(name, scope);
                 } else {
-                    new Error("cannot bind " + name);
+                    throw "Cannot bind " + name;
                 }
             } else {
                 if (name.substr(-2, 2) == '[]') {
@@ -112,7 +177,7 @@ module ScopeBuilder {
             }
         }
         constructor(private element: HTMLElement, initCode: string, ref: string, private parent: Scope) {
-            if (ref != undefined && parent != undefined) {
+            if (ref != '' && parent != null) {
                 parent.addName(ref, this);
             }
             if (initCode) {

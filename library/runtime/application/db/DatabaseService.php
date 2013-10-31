@@ -17,24 +17,32 @@ namespace application\db
             $result = $this->database->query('SELECT * FROM items');
             $items = array();
             while ($item = $result->fetchArray(SQLITE3_ASSOC)) {
-                $items[] = $item;
+                $items[] = $this->formatItem($item);
             }
             return $items;
         }
 
-        public function insertItem($content)
+        public function insertItem($content, $done)
         {
-            $statement = $this->database->prepare('INSERT INTO items (content) VALUES (:content)');
-            $statement->bindValue(':content', $content, SQLITE3_TEXT);
+            $statement = $this->database->prepare('INSERT INTO items (content, done) VALUES (:content, :done)');
+            $statement->bindValue(':content', (string) $content, SQLITE3_TEXT);
+            $statement->bindValue(':done', (int) $done, SQLITE3_INTEGER);
             $statement->execute();
             return $this->database->lastInsertRowid();
         }
 
-        public function updateItem($itemId, $content)
+        public function updateItemContent($itemId, $content)
         {
             $statement = $this->database->prepare('UPDATE items SET content = :content WHERE id = :id');
-            $statement->bindValue(':content', $content, SQLITE3_TEXT);
-            $statement->bindValue(':id', $itemId, SQLITE3_INTEGER);
+            $statement->bindValue(':content', (string) $content, SQLITE3_TEXT);
+            $statement->bindValue(':id', (int) $itemId, SQLITE3_INTEGER);
+            $statement->execute();
+        }
+
+        public function updateItemStatus($itemId, $done) {
+            $statement = $this->database->prepare('UPDATE items SET done = :done WHERE id = :id');
+            $statement->bindValue(':done', (int) $done, SQLITE3_INTEGER);
+            $statement->bindValue(':id', (int) $itemId, SQLITE3_INTEGER);
             $statement->execute();
         }
 
@@ -52,10 +60,18 @@ namespace application\db
 
         public function getItem($itemId)
         {
-            $statement = $this->database->prepare('SELECT id FROM items WHERE id = :id');
+            $statement = $this->database->prepare('SELECT * FROM items WHERE id = :id');
             $statement->bindValue(':id', $itemId, SQLITE3_INTEGER);
             $result = $statement->execute();
-            return $result->fetchArray();
+            return $this->formatItem($result->fetchArray(SQLITE3_ASSOC));
+        }
+
+        private function formatItem($item) {
+            return array(
+                'id' => (int) $item['id'],
+                'content' => (string) $item['content'],
+                'done' => (bool) $item['done'],
+            );
         }
     }
 }
