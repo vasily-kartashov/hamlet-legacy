@@ -1,12 +1,16 @@
 <html>
     <head>
         <link rel="stylesheet" href="/css/application.css"/>
-        <script src="/js/jquery-2.0.3.min.js"></script>
-        <script src="/js/application.js"></script>
     </head>
-    <body>
-        <h1>{$greeting}</h1>
-        <ul id="items"></ul>
-        Add new item: <input id="content"/>
+    <body data-class="DocumentView(textBox,label,todoList)">
+        <h1 data-ref="label" data-class="LabelView(this)">{$greeting}</h1>
+        <ul data-ref="todoList" data-class="TodoListView(this,items[])">
+            <li data-ref="items[]"></li>
+            <li data-ref="items[]"></li>
+            <li data-ref="items[]"></li>
+        </ul>
+        Add new item: <input data-ref="textBox" data-class="TextBoxView(this)" />
+        <script src="/js/jquery-2.0.3.min.js"></script>
+        <script src="/js/Main.js"></script>
     </body>
 </html>

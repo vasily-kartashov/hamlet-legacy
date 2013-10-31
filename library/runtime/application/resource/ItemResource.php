@@ -3,8 +3,7 @@ namespace application\resource
 {
     use application\entity\ItemEntity;
     use application\environment\DefaultEnvironment;
-    use core\Request;
-    use core\Resource;
+    use core\request\Request;
     use core\resource\CollectionElementResource;
 
     class ItemResource extends CollectionElementResource

@@ -5,8 +5,7 @@ namespace application\resource
     use application\entity\ItemsListEntity;
     use application\environment\DefaultEnvironment;
     use core\entity\LocatedEntity;
-    use core\Request;
-    use core\Resource;
+    use core\request\Request;
     use core\resource\CollectionResource;
 
     class ItemsListResource extends CollectionResource

@@ -3,6 +3,7 @@
 namespace core\response
 {
     use core\entity\Entity;
+    use core\request\Request;
     use Memcached;
 
     /**

@@ -7,7 +7,7 @@ namespace application
     use application\resource\ItemResource;
     use application\resource\ItemsListResource;
     use core\Application;
-    use core\Request;
+    use core\request\Request;
     use core\resource\EntityResource;
     use core\resource\RedirectResource;
 
