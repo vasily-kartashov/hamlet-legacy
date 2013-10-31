@@ -1,105 +1,93 @@
 /// <reference path="jquery.d.ts" />
 
-class DocumentView {
-    constructor(private textBox: TextBoxView, private label: LabelView, private todoList: TodoListView) {
-        this.textBox.onEnter(this.todoList, this.todoList.addItem);
-    }
-    getLabel(): LabelView {
-        return this.label;
-    }
-}
-
-class LabelView {
-    constructor(private el: HTMLHeadingElement) {}
-    public setValue(value: string) {
-        $(this.el).text(value);
-    }
-}
-
-class TodoListView {
-    private service: Service;
-    constructor(private el: HTMLUListElement) {
-        this.service = new Service();
-        this.service.getItems(this, this._addItems);
-    }
-    private _addItem(item: Item) {
-        var li = $('<li/>').text(item.content).attr('data-id', item.id).toggleClass('done', item.done);
-        var _this = this;
-        li.click(function() {
-            _this.service.updateStatus(item.id, $(this).hasClass('done'), this, function() {
-                $(this).toggleClass('done');
-            });
-        });
-        $(this.el).append(li);
-    }
-    private _addItems(items: Item[]) {
-        for (var i in items) {
-            this._addItem(items[i]);
+module Views {
+    export class Document {
+        constructor(todoList: TodoList, textBox: TextBox) {
+            textBox.onEnter(todoList, todoList.addItem);
         }
     }
-    public addItem(value: string) {
-        this.service.addItem(value, this, this._addItem);
+    export class TodoList {
+        private service: Service.Endpoint;
+        constructor(private el: HTMLUListElement) {
+            this.service = new Service.Endpoint();
+            var service = this.service;
+            service.getItems(this, this._addItems);
+            $(el).on('click', 'li', function(event: Event) {
+                var target = $(event.target);
+                service.updateStatus(target.data('id'), target.hasClass('done'), target, function() {
+                    this.toggleClass('done');
+                });
+            });
+        }
+        public addItem(content: string) {
+            this.service.addItem(content, this, this._addItem);
+        }
+        private _addItem(item: Service.Item) {
+            var li = $('<li/>').text(item.content).toggleClass('done', item.done).data('id', item.id);
+            $(this.el).append(li);
+        }
+        private _addItems(items: Service.Item[]) {
+            for (var i in items) {
+                this._addItem(items[i]);
+            }
+        }
+    }
+    export class TextBox {
+        constructor(private el: HTMLInputElement) {}
+        public onEnter(scope: any, callback: (value: string) => void) {
+            $(this.el).keyup(function(event) {
+                if (event.which == 13) {
+                    callback.call(scope, $(this).val());
+                    $(this).val('');
+                }
+            });
+        }
     }
 }
 
-class TextBoxView {
-    constructor(private el: HTMLInputElement) {}
-    public onEnter(scope: any, callback: (value: string) => void) {
-        $(this.el).keyup(function(event) {
-            if (event.which == 13) {
-                callback.call(scope, $(this).val());
-                $(this).val('');
-            }
-        });
+module Service {
+    export interface Item {
+        id: number;
+        content: string;
+        done: boolean;
     }
-}
-
-
-
-
-
-interface Item {
-    id: number;
-    content: string;
-    done: boolean;
-}
-
-class Service {
-    constructor() {}
-    public getItems(scope: any, callback: (items: Item[]) => void) {
-        $.ajax({
-            url: '/items',
-            method: 'GET',
-            success: function(items: Item[]) {
-                callback.call(scope, items);
-            }
-        });
-    }
-    public addItem(content: string, scope: any, callback: (item: Item) => void) {
-        $.ajax({
-            url: '/items',
-            method: 'PUT',
-            data: {
-                content: content
-            },
-            success: function(item: Item) {
-                callback.call(scope, item);
-            }
-        });
-    }
-    public updateStatus(id: number, done: boolean, scope: any, callback: () => void) {
-        $.ajax({
-            url: '/items/' + id.toString() + '/' + (done? 'undo' : 'do'),
-            method: 'POST',
-            success: function() {
-                callback.call(scope);
-            }
-        })
+    export class Endpoint {
+        constructor() {}
+        public getItems(scope: any, callback: (items: Item[]) => void) {
+            $.ajax({
+                url: '/items',
+                method: 'GET',
+                success: function(items: Item[]) {
+                    callback.call(scope, items);
+                }
+            });
+        }
+        public addItem(content: string, scope: any, callback: (item: Item) => void) {
+            $.ajax({
+                url: '/items',
+                method: 'PUT',
+                data: {
+                    content: content
+                },
+                success: function(item: Item) {
+                    callback.call(scope, item);
+                }
+            });
+        }
+        public updateStatus(id: number, done: boolean, scope: any, callback: () => void) {
+            $.ajax({
+                url: '/items/' + id.toString() + '/' + (done? 'undo' : 'do'),
+                method: 'POST',
+                success: function() {
+                    callback.call(scope);
+                }
+            })
+        }
     }
 }
 
 $(document).ready(function() {
-    var documentView = <DocumentView> ScopeBuilder.create(document);
+    var documentView = <Views.Document> ScopeBuilder.create(document);
     console.log(documentView);
 });
 
@@ -154,7 +142,12 @@ module ScopeBuilder {
                         }
                         arguments.push(argument);
                     }
-                    this.object = Object.create(window[this.className].prototype);
+                    var root: any = window;
+                    var namespaces = this.className.split('.');
+                    for (var i = 0, l = namespaces.length; i < l; i++) {
+                        root = root[namespaces[i]];
+                    }
+                    this.object = Object.create(root.prototype);
                     this.object.constructor.apply(this.object, arguments);
                 }
             }
