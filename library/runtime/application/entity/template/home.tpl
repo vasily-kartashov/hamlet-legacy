@@ -7,7 +7,7 @@
         <ul data-ref="todoList" data-class="Views.TodoList(this)"></ul>
         Add new item: <input data-ref="textBox" data-class="Views.TextBox(this)" />
 
-        {typescript fileSystemPath="../../../../../public/js" urlPrefix="/js" isDevelopmentMode=false}
+        {typescript fileSystemPath="../../../../../public/js" urlPrefix="/js" isDevelopmentMode=true}
 
         <div id="fb-root"></div>
         <script>
