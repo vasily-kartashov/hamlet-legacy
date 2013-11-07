@@ -1,9 +1,15 @@
-/// <reference path="jquery.d.ts" />
+/// <reference path="facebook.d"/>
+/// <reference path="Builder"/>
+/// <reference path="jquery-2.0.3.d"/>
 
 module Views {
     export class Document {
+        private facebook: Facebook.Facebook;
         constructor(todoList: TodoList, textBox: TextBox) {
             textBox.onEnter(todoList, todoList.addItem);
+        }
+        public setFacebook(facebook: Facebook.Facebook) {
+            this.facebook = facebook;
         }
     }
     export class TodoList {
@@ -86,112 +92,21 @@ module Service {
     }
 }
 
+declare var window: FacebookWindow;
+
 $(document).ready(function() {
-    var documentView = <Views.Document> Application.init(this);
-    console.log(documentView);
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '543290215752753',
+            status: true,
+            cookie: true
+        });
+        console.time("Initializing Application");
+        var documentView = <Views.Document> Builder.init(document);
+        console.timeEnd("Initializing Application");
+        documentView.setFacebook(FB);
+        console.log(documentView);
+    }
 });
 
-module Application {
-    class Scope {
-        private className: string;
-        private names: {
-            [name: string]: any;
-        } = {};
-        private namesOrder: string[] = [];
-        private object: any = null;
-        public init(): any {
-            if (this.object == null) {
-                if (!this.className) {
-                    return this.object = this.element;
-                } else {
-                    var arguments = [];
-                    for (var i = 0, l = this.namesOrder.length; i < l; i++) {
-                        var name = this.namesOrder[i];
-                        var argument: any;
-                        if (name.substr(-2, 2) == '[]') {
-                            argument = [];
-                            for (var j = 0, m = this.names[name].length; j < m; j++) {
-                                argument.push((<Scope> this.names[name][j]).init());
-                            }
-                        } else {
-                            if (this.names[name] == null) {
-                                throw "Name " + name + " is not initialized in the scope";
-                            }
-                            argument = (<Scope> this.names[name]).init();
-                        }
-                        arguments.push(argument);
-                    }
-                    var currentNamespace: any = window;
-                    var namespaces = this.className.split('.');
-                    for (var i = 0, l = namespaces.length; i < l; i++) {
-                        if (namespaces[i] in currentNamespace) {
-                            currentNamespace = currentNamespace[namespaces[i]];
-                        } else {
-                            throw "Namespace '" + namespaces[i] + "' not defined in '" + this.className + "'";
-                        }
-                    }
-                    this.object = Object.create(currentNamespace.prototype);
-                    this.object.constructor.apply(this.object, arguments);
-                }
-            }
-            return this.object;
-        }
-        public addName(name: string, scope: Scope) {
-            if (!(name in this.names)) {
-                if (this.parent) {
-                    this.parent.addName(name, scope);
-                } else {
-                    throw "Cannot bind " + name;
-                }
-            } else {
-                if (name.substr(-2, 2) == '[]') {
-                    this.names[name].push(scope);
-                } else {
-                    this.names[name] = scope;
-                }
-            }
-        }
-        constructor(private element: HTMLElement, initCode: string, ref: string, private parent: Scope) {
-            if (ref != '' && parent != null) {
-                parent.addName(ref, this);
-            }
-            if (initCode) {
-                var position = initCode.indexOf('(');
-                this.className = initCode.substr(0, position);
-                var suffix = initCode.substr(position + 1).trim();
-                var names = suffix.substring(0, suffix.length - 1).split(',');
-                for (var i = 0, l = names.length; i < l; i++) {
-                    var name = names[i];
-                    if (name.substr(-2, 2) == '[]') {
-                        this.names[name] = [];
-                    } else {
-                        this.names[name] = null;
-                    }
-                    this.namesOrder.push(name);
-                }
-            }
-            if ('this' in this.names) {
-                this.names['this'] = new Scope(this.element, '', '', this);
-            }
-        }
-    }
-    export function init(document: HTMLDocument): any {
-        var process = function(node: Node, scope: Scope = null): Scope {
-            if (node.nodeType != 1) {
-                return scope;
-            }
-            var element = <HTMLElement> node;
-            if (element.hasAttribute('data-ref') || element.hasAttribute('data-class')) {
-                var ref = (element.getAttribute('data-class') || '').replace(/\s+/g, '');
-                var initCode = (element.getAttribute('data-ref') || '').replace(/\s+/g, '');
-                scope = new Scope(element, ref, initCode, scope);
-            }
-            var childNodes: NodeList = element.childNodes;
-            for (var i = 0, l = childNodes.length; i < l; i++) {
-                process(childNodes.item(i), scope);
-            }
-            return scope;
-        };
-        return process(document.body).init();
-    }
-}
+
