@@ -6,7 +6,19 @@
         <h1>{$greeting}</h1>
         <ul data-ref="todoList" data-class="Views.TodoList(this)"></ul>
         Add new item: <input data-ref="textBox" data-class="Views.TextBox(this)" />
-        <script src="/js/jquery-2.0.3.min.js"></script>
-        <script src="/js/Main.js"></script>
+
+        {typescript fileSystemPath="../../../../../public/js" urlPrefix="/js" isDevelopmentMode=false}
+
+        <div id="fb-root"></div>
+        <script>
+            {literal}
+            (function(d){
+                var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+                    js = d.createElement('script'); js.id = id; js.async = true;
+                js.src = "//connect.facebook.net/es_LA/all.js";
+                d.getElementsByTagName('head')[0].appendChild(js);
+            }(document));
+            {/literal}
+        </script>
     </body>
 </html>
