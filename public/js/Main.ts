@@ -4,21 +4,20 @@
 
 module Views {
     export class Document {
-        private facebook: Facebook.Facebook;
-        constructor(todoList: TodoList, textBox: TextBox) {
-            textBox.onEnter(todoList, todoList.addItem);
-        }
-        public setFacebook(facebook: Facebook.Facebook) {
-            this.facebook = facebook;
+        constructor(private todoList: TodoList, private textBox: TextBox) {}
+        public init(accessToken: string) {
+            var service = new Service.Endpoint(accessToken);
+            this.todoList.init(service);
+            this.textBox.onEnter(this.todoList, this.todoList.addItem);
         }
     }
     export class TodoList {
         private service: Service.Endpoint;
-        constructor(private el: HTMLUListElement) {
-            this.service = new Service.Endpoint();
-            var service = this.service;
+        constructor(private el: HTMLUListElement) {}
+        public init(service: Service.Endpoint) {
+            this.service = service;
             service.getItems(this, this._addItems);
-            $(el).on('click', 'li', function(event: Event) {
+            $(this.el).on('click', 'li', function(event: Event) {
                 var target = $(event.target);
                 service.updateStatus(target.data('id'), target.hasClass('done'), target, function() {
                     this.toggleClass('done');
@@ -58,14 +57,20 @@ module Service {
         done: boolean;
     }
     export class Endpoint {
-        constructor() {}
+        private headers;
+        constructor(accessToken: string) {
+            this.headers = {
+                Authorization: 'Bearer ' + accessToken
+            };
+        }
         public getItems(scope: any, callback: (items: Item[]) => void) {
             $.ajax({
                 url: '/items',
                 method: 'GET',
                 success: function(items: Item[]) {
                     callback.call(scope, items);
-                }
+                },
+                headers: this.headers
             });
         }
         public addItem(content: string, scope: any, callback: (item: Item) => void) {
@@ -77,7 +82,8 @@ module Service {
                 },
                 success: function(item: Item) {
                     callback.call(scope, item);
-                }
+                },
+                headers: this.headers
             });
         }
         public updateStatus(id: number, done: boolean, scope: any, callback: () => void) {
@@ -86,7 +92,8 @@ module Service {
                 method: 'POST',
                 success: function() {
                     callback.call(scope);
-                }
+                },
+                headers: this.headers
             })
         }
     }
@@ -101,11 +108,14 @@ $(document).ready(function() {
             status: true,
             cookie: true
         });
-        console.time("Initializing Application");
-        var documentView = <Views.Document> Builder.init(document);
-        console.timeEnd("Initializing Application");
-        documentView.setFacebook(FB);
-        console.log(documentView);
+        FB.login(function(response) {
+            if (response.authResponse) {
+                var documentView = <Views.Document> Builder.init(document);
+                documentView.init(response.authResponse.accessToken);
+            } else {
+
+            }
+        });
     }
 });
 

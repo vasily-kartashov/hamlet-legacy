@@ -395,7 +395,7 @@ declare module Facebook {
     /**
      * https://developers.facebook.com/docs/reference/javascript/
      */
-    interface Facebook {
+    export interface Facebook {
 
         Event: Event;
         XFBML: XFBML;

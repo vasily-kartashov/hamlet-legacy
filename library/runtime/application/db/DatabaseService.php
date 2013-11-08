@@ -12,9 +12,12 @@ namespace application\db
             $this->database = $database;
         }
 
-        public function getItems()
+        public function getItems($uid)
         {
-            $result = $this->database->query('SELECT * FROM items');
+            $statement = $this->database->prepare('SELECT * FROM items WHERE uid = :uid');
+            $statement->bindValue(':uid', (string) $uid, SQLITE3_TEXT);
+            $result = $statement->execute();
+
             $items = array();
             while ($item = $result->fetchArray(SQLITE3_ASSOC)) {
                 $items[] = $this->formatItem($item);
@@ -22,9 +25,10 @@ namespace application\db
             return $items;
         }
 
-        public function insertItem($content, $done)
+        public function insertItem($uid, $content, $done)
         {
-            $statement = $this->database->prepare('INSERT INTO items (content, done) VALUES (:content, :done)');
+            $statement = $this->database->prepare('INSERT INTO items (uid, content, done) VALUES (:uid, :content, :done)');
+            $statement->bindValue(':uid', (string) $uid, SQLITE3_TEXT);
             $statement->bindValue(':content', (string) $content, SQLITE3_TEXT);
             $statement->bindValue(':done', (int) $done, SQLITE3_INTEGER);
             $statement->execute();
@@ -39,29 +43,32 @@ namespace application\db
             $statement->execute();
         }
 
-        public function updateItemStatus($itemId, $done) {
-            $statement = $this->database->prepare('UPDATE items SET done = :done WHERE id = :id');
+        public function updateItemStatus($itemId, $uid, $done) {
+            $statement = $this->database->prepare('UPDATE items SET done = :done WHERE id = :id AND uid = :uid');
             $statement->bindValue(':done', (int) $done, SQLITE3_INTEGER);
             $statement->bindValue(':id', (int) $itemId, SQLITE3_INTEGER);
+            $statement->bindValue(':uid', (int) $uid, SQLITE3_INTEGER);
             $statement->execute();
         }
 
-        public function itemExists($itemId)
+        public function itemExists($itemId, $uid)
         {
-            return is_array($this->getItem($itemId));
+            return is_array($this->getItem($itemId, $uid));
         }
 
-        public function deleteItem($itemId)
+        public function deleteItem($itemId, $uid)
         {
-            $statement = $this->database->prepare('DELETE FROM items WHERE id = :id');
-            $statement->bindValue(':id', $itemId, SQLITE3_INTEGER);
+            $statement = $this->database->prepare('DELETE FROM items WHERE id = :id AND uid = :uid');
+            $statement->bindValue(':id', (int) $itemId, SQLITE3_INTEGER);
+            $statement->bindValue(':uid', (string) $itemId, SQLITE3_TEXT);
             $statement->execute();
         }
 
-        public function getItem($itemId)
+        public function getItem($itemId, $uid)
         {
-            $statement = $this->database->prepare('SELECT * FROM items WHERE id = :id');
-            $statement->bindValue(':id', $itemId, SQLITE3_INTEGER);
+            $statement = $this->database->prepare('SELECT * FROM items WHERE id = :id AND uid = :uid');
+            $statement->bindValue(':id', (int) $itemId, SQLITE3_INTEGER);
+            $statement->bindValue(':id', (string) $uid, SQLITE3_TEXT);
             $result = $statement->execute();
             return $this->formatItem($result->fetchArray(SQLITE3_ASSOC));
         }
@@ -69,6 +76,7 @@ namespace application\db
         private function formatItem($item) {
             return array(
                 'id' => (int) $item['id'],
+                'uid' => (int) $item['uid'],
                 'content' => (string) $item['content'],
                 'done' => (bool) $item['done'],
             );

@@ -82,6 +82,7 @@ namespace application\environment
                 $db->exec('
                     CREATE TABLE items (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        uid TEXT,
                         content TEXT,
                         done INTEGER
                     )
