@@ -40,7 +40,7 @@ namespace application\resource
 
         protected function updateCollectionElement(Request $request)
         {
-            $this->environment->getDatabaseService()->updateItemContent($this->itemId, $request->getParameter('content'));
+            $this->environment->getDatabaseService()->updateItemContent($this->itemId, $this->uid, $request->getParameter('content'));
         }
 
         protected function getCollectionElement(Request $request)
@@ -49,8 +49,13 @@ namespace application\resource
             return new ItemEntity($item['id'], $item['content'], $item['done']);
         }
 
-        protected function updateItem($itemId, $done) {
+        protected function updateItem($itemId, $done)
+        {
             $this->environment->getDatabaseService()->updateItemStatus($itemId, $this->uid, $done);
+            var_dump($itemId);
+            var_dump($this->uid);
+            var_dump($done);
+            die();
             return new NoContentResponse();
         }
 

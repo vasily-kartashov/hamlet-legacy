@@ -15,7 +15,7 @@ namespace application\db
         public function getItems($uid)
         {
             $statement = $this->database->prepare('SELECT * FROM items WHERE uid = :uid');
-            $statement->bindValue(':uid', (string) $uid, SQLITE3_TEXT);
+            $statement->bindValue(':uid', (int) $uid, SQLITE3_TEXT);
             $result = $statement->execute();
 
             $items = array();
@@ -35,11 +35,12 @@ namespace application\db
             return $this->database->lastInsertRowid();
         }
 
-        public function updateItemContent($itemId, $content)
+        public function updateItemContent($itemId, $uid, $content)
         {
-            $statement = $this->database->prepare('UPDATE items SET content = :content WHERE id = :id');
+            $statement = $this->database->prepare('UPDATE items SET content = :content WHERE id = :id AND uid = :uid');
             $statement->bindValue(':content', (string) $content, SQLITE3_TEXT);
             $statement->bindValue(':id', (int) $itemId, SQLITE3_INTEGER);
+            $statement->bindValue(':uid', (int) $uid, SQLITE3_TEXT);
             $statement->execute();
         }
 
@@ -47,7 +48,7 @@ namespace application\db
             $statement = $this->database->prepare('UPDATE items SET done = :done WHERE id = :id AND uid = :uid');
             $statement->bindValue(':done', (int) $done, SQLITE3_INTEGER);
             $statement->bindValue(':id', (int) $itemId, SQLITE3_INTEGER);
-            $statement->bindValue(':uid', (int) $uid, SQLITE3_INTEGER);
+            $statement->bindValue(':uid', (int) $uid, SQLITE3_TEXT);
             $statement->execute();
         }
 
@@ -60,7 +61,7 @@ namespace application\db
         {
             $statement = $this->database->prepare('DELETE FROM items WHERE id = :id AND uid = :uid');
             $statement->bindValue(':id', (int) $itemId, SQLITE3_INTEGER);
-            $statement->bindValue(':uid', (string) $itemId, SQLITE3_TEXT);
+            $statement->bindValue(':uid', (string) $uid, SQLITE3_TEXT);
             $statement->execute();
         }
 
@@ -68,7 +69,7 @@ namespace application\db
         {
             $statement = $this->database->prepare('SELECT * FROM items WHERE id = :id AND uid = :uid');
             $statement->bindValue(':id', (int) $itemId, SQLITE3_INTEGER);
-            $statement->bindValue(':id', (string) $uid, SQLITE3_TEXT);
+            $statement->bindValue(':uid', (string) $uid, SQLITE3_TEXT);
             $result = $statement->execute();
             return $this->formatItem($result->fetchArray(SQLITE3_ASSOC));
         }

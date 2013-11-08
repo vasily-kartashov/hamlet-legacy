@@ -53,6 +53,7 @@ module Views {
 module Service {
     export interface Item {
         id: number;
+        uid: number;
         content: string;
         done: boolean;
     }
