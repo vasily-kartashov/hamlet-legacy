@@ -1,26 +1,13 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: danny
- * Date: 01/10/2013
- * Time: 17:39
- * To change this template use File | Settings | File Templates.
- */
-
-namespace core\request;
-
+namespace core\request
 {
-
-
-    class PhpRequest extends Request {
-
+    class PHPRequest extends Request 
+    {
         protected $environment;
 
         public function __construct($path, $request)
         {
-
             $defaults = array(
-
                 'headers' => array(),
                 'method' => 'GET',
                 'parameters' => array(),
@@ -29,12 +16,9 @@ namespace core\request;
                 'cookies' => array(),
                 'ip' => '127.0.0.1',
                 'environment' => 'localhost',
-
             );
 
-
             $request = array_merge($request,$defaults);
-
 
             $this->environment = $request['environment'];
             $this->headers = $request['headers'];
@@ -45,7 +29,6 @@ namespace core\request;
             $this->locale = $request['locale'];
             $this->cookies = $request['cookies'];
             $this->ip = $request['ip'];
-
         }
 
         public function getEnvironmentName()
@@ -62,7 +45,5 @@ namespace core\request;
         {
             return array('en');
         }
-
     }
-
 }
