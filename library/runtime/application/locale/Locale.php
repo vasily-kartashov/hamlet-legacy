@@ -1,29 +1,17 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: danny
- * Date: 01/10/2013
- * Time: 15:26
- * To change this template use File | Settings | File Templates.
- */
-
-namespace application\locale;
-
+namespace application\locale
 {
-
-    class Locale {
-
+    class Locale 
+    {
         protected $data;
         protected $languageCode;
         const SKIP = '[SKIP]';
 
-
-        public function __construct($data,$languageCode)
+        public function __construct($data, $languageCode)
         {
             $this->data = $data;
             $this->languageCode = $languageCode;
         }
-
 
         public function translate($token)
         {
@@ -57,9 +45,5 @@ namespace application\locale;
         {
             return 'ltr';
         }
-
-
-
     }
-
 }
