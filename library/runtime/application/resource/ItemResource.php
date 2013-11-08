@@ -15,10 +15,11 @@ namespace application\resource
         private $itemId;
         private $operation;
 
-        public function __construct(DefaultEnvironment $environment, $itemId, $operation = null)
+        public function __construct(DefaultEnvironment $environment, $itemId, $uid, $operation = null)
         {
             $this->environment = $environment;
             $this->itemId = $itemId;
+            $this->uid = $uid;
             $this->operation = $operation;
         }
 
@@ -29,12 +30,12 @@ namespace application\resource
 
         protected function collectionElementExists(Request $request)
         {
-            return $this->environment->getDatabaseService()->itemExists($this->itemId);
+            return $this->environment->getDatabaseService()->itemExists($this->itemId, $this->uid);
         }
 
         protected function deleteCollectionElement(Request $request)
         {
-            $this->environment->getDatabaseService()->deleteItem($this->itemId);
+            $this->environment->getDatabaseService()->deleteItem($this->itemId, $this->uid);
         }
 
         protected function updateCollectionElement(Request $request)
@@ -44,12 +45,12 @@ namespace application\resource
 
         protected function getCollectionElement(Request $request)
         {
-            $item = $this->environment->getDatabaseService()->getItem($this->itemId);
+            $item = $this->environment->getDatabaseService()->getItem($this->itemId, $this->uid);
             return new ItemEntity($item['id'], $item['content'], $item['done']);
         }
 
         protected function updateItem($itemId, $done) {
-            $this->environment->getDatabaseService()->updateItemStatus($itemId, $done);
+            $this->environment->getDatabaseService()->updateItemStatus($itemId, $this->uid, $done);
             return new NoContentResponse();
         }
 

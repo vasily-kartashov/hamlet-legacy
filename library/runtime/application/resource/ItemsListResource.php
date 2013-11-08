@@ -11,10 +11,12 @@ namespace application\resource
     class ItemsListResource extends CollectionResource
     {
         private $environment;
+        private $uid;
 
-        public function __construct(DefaultEnvironment $environment)
+        public function __construct(DefaultEnvironment $environment, $uid)
         {
             $this->environment = $environment;
+            $this->uid = $uid;
         }
 
         public function isPutRequestValid(Request $request)
@@ -24,14 +26,14 @@ namespace application\resource
 
         protected function getCollection(Request $request)
         {
-            $items = $this->environment->getDatabaseService()->getItems();
+            $items = $this->environment->getDatabaseService()->getItems($this->uid);
             return new ItemsListEntity($items);
         }
 
         protected function createCollectionElement(Request $request)
         {
             $content = $request->getParameter('content');
-            $id = $this->environment->getDatabaseService()->insertItem($content, false);
+            $id = $this->environment->getDatabaseService()->insertItem($this->uid, $content, false);
 
             $location = $this->environment->getCanonicalDomain() . '/items/' . $id;
             $entity = new ItemEntity($id, $content, false);

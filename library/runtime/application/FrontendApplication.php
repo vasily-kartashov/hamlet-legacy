@@ -18,16 +18,20 @@ namespace application
             $environment = $this->getEnvironment($request);
 
             if ($authorization = $request->getHeader('Authorization')) {
-                // @todo get facebook user id from facebook
-
-                if ($request->pathMatchesPattern('/items')) {
-                    return new ItemsListResource($environment);
-                }
-                if ($matches = $request->pathMatchesPattern('/items/{itemId}')) {
-                    return new ItemResource($environment, $matches['itemId']);
-                }
-                if ($matches = $request->pathMatchesPattern('/items/{itemId}/{operation}')) {
-                    return new ItemResource($environment, $matches['itemId'], $matches['operation']);
+                list($_, $accessToken) = explode(' ', $authorization, 2);
+                $uid = $this->getUid($accessToken);
+                if ($uid) {
+                    if ($request->pathMatchesPattern('/items')) {
+                        return new ItemsListResource($environment, $uid);
+                    }
+                    if ($matches = $request->pathMatchesPattern('/items/{itemId}')) {
+                        return new ItemResource($environment, $matches['itemId'], $uid);
+                    }
+                    if ($matches = $request->pathMatchesPattern('/items/{itemId}/{operation}')) {
+                        return new ItemResource($environment, $matches['itemId'], $uid, $matches['operation']);
+                    }
+                } else {
+                    // @todo add not allowed response
                 }
             }
 
@@ -40,6 +44,11 @@ namespace application
                 }
             }
             return new RedirectResource($environment->getCanonicalDomain() . '/en');
+        }
+
+        protected function getUid($accessToken) {
+            $content = json_decode(file_get_contents("https://graph.facebook.com/me?access_token={$accessToken}"));
+            return $content->id;
         }
 
         protected function getCacheServerLocation(Request $request)
