@@ -52,10 +52,6 @@ namespace application\resource
         protected function updateItem($itemId, $done)
         {
             $this->environment->getDatabaseService()->updateItemStatus($itemId, $this->uid, $done);
-            var_dump($itemId);
-            var_dump($this->uid);
-            var_dump($done);
-            die();
             return new NoContentResponse();
         }
 
