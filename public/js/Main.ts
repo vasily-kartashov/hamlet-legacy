@@ -8,7 +8,9 @@ module Views {
         public init(accessToken: string) {
             var service = new Service.Endpoint(accessToken);
             this.todoList.init(service);
-            this.textBox.onEnter(this.todoList, this.todoList.addItem);
+            this.textBox.onEnter((content: string) => {
+                this.todoList.addItem(content);
+            });
         }
     }
     export class TodoList {
@@ -16,16 +18,20 @@ module Views {
         constructor(private el: HTMLUListElement) {}
         public init(service: Service.Endpoint) {
             this.service = service;
-            service.getItems(this, this._addItems);
-            $(this.el).on('click', 'li', function(event: Event) {
+            service.getItems((items: Service.Item[]) => {
+                this._addItems(items);
+            });
+            $(this.el).on('click', 'li', (event: Event) => {
                 var target = $(event.target);
-                service.updateStatus(target.data('id'), target.hasClass('done'), target, function() {
-                    this.toggleClass('done');
+                this.service.updateStatus(target.data('id'), target.hasClass('done'), function() {
+                    target.toggleClass('done');
                 });
             });
         }
         public addItem(content: string) {
-            this.service.addItem(content, this, this._addItem);
+            this.service.addItem(content, (item: Service.Item) => {
+                this._addItem(item);
+            });
         }
         private _addItem(item: Service.Item) {
             var li = $('<li/>').text(item.content).toggleClass('done', item.done).data('id', item.id);
@@ -39,10 +45,10 @@ module Views {
     }
     export class TextBox {
         constructor(private el: HTMLInputElement) {}
-        public onEnter(scope: any, callback: (value: string) => void) {
+        public onEnter(callback: (value: string) => void) {
             $(this.el).keyup(function(event) {
                 if (event.which == 13) {
-                    callback.call(scope, $(this).val());
+                    callback($(this).val());
                     $(this).val('');
                 }
             });
@@ -64,17 +70,17 @@ module Service {
                 Authorization: 'Bearer ' + accessToken
             };
         }
-        public getItems(scope: any, callback: (items: Item[]) => void) {
+        public getItems(callback: (items: Item[]) => void) {
             $.ajax({
                 url: '/items',
                 method: 'GET',
                 success: function(items: Item[]) {
-                    callback.call(scope, items);
+                    callback(items);
                 },
                 headers: this.headers
             });
         }
-        public addItem(content: string, scope: any, callback: (item: Item) => void) {
+        public addItem(content: string, callback: (item: Item) => void) {
             $.ajax({
                 url: '/items',
                 method: 'PUT',
@@ -82,17 +88,17 @@ module Service {
                     content: content
                 },
                 success: function(item: Item) {
-                    callback.call(scope, item);
+                    callback(item);
                 },
                 headers: this.headers
             });
         }
-        public updateStatus(id: number, done: boolean, scope: any, callback: () => void) {
+        public updateStatus(id: number, done: boolean, callback: () => void) {
             $.ajax({
                 url: '/items/' + id.toString() + '/' + (done? 'undo' : 'do'),
                 method: 'POST',
                 success: function() {
-                    callback.call(scope);
+                    callback();
                 },
                 headers: this.headers
             })
