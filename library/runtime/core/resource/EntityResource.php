@@ -20,7 +20,7 @@ namespace core\resource
 
         /**
          * @param Request $request
-         * @return MethodNotAllowedResponse|OKORNotModifiedResponse
+         * @return MethodNotAllowedResponse|OKOrNotModifiedResponse
          */
         public function getResponse(Request $request)
         {
