@@ -30,9 +30,7 @@ module Views {
             });
         }
         public assert() {
-            $(this.el).find('li').each(function (item) {
-                Assert.hasData(item, 'id');
-            });
+            Assert.hasData($(this.el).find('li'), 'id');
         }
         public addItem(content: string) {
             this.service.addItem(content, (item: Service.Item) => {
