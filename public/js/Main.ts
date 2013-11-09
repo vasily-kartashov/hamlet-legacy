@@ -1,6 +1,7 @@
 /// <reference path="facebook.d"/>
 /// <reference path="Builder"/>
 /// <reference path="jquery-2.0.3.d"/>
+/// <reference path="Assert"/>
 
 module Views {
     export class Document {
@@ -26,6 +27,11 @@ module Views {
                 this.service.updateStatus(target.data('id'), target.hasClass('done'), function() {
                     target.toggleClass('done');
                 });
+            });
+        }
+        public assert() {
+            $(this.el).find('li').each(function (item) {
+                Assert.hasData(item, 'id');
             });
         }
         public addItem(content: string) {
@@ -117,7 +123,7 @@ $(document).ready(function() {
         });
         FB.login(function(response) {
             if (response.authResponse) {
-                var documentView = <Views.Document> Builder.init(document);
+                var documentView = <Views.Document> Builder.init(document, true);
                 documentView.init(response.authResponse.accessToken);
             } else {
 

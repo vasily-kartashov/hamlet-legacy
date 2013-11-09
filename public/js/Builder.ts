@@ -43,6 +43,16 @@ module Builder {
             }
             return this.object;
         }
+        public checkAssertions() {
+            if (this.object.hasOwnProperty('assert')) {
+                (<{assert: () => void}>this.object).assert();
+            }
+            for (var name in this.names) {
+                if (this.names.hasOwnProperty(name)) {
+                    this.names[name].checkAssertions();
+                }
+            }
+        }
         public addName(name: string, scope: Scope) {
             if (!(name in this.names)) {
                 if (this.parent) {
@@ -85,7 +95,7 @@ module Builder {
             }
         }
     }
-    export function init(document: HTMLDocument): any {
+    export function init(document: Document, checkAssertions: boolean = false): any {
         var process = function(node: Node, scope: Scope = null): Scope {
             if (node.nodeType != 1) {
                 return scope;
@@ -102,6 +112,12 @@ module Builder {
             }
             return scope;
         };
-        return process(document.body).init();
+        var scope: Scope = process(document.body).init();
+        if (checkAssertions) {
+            setInterval(() => {
+                scope.checkAssertions();
+            }, 100);
+        }
+        return scope;
     }
 }
