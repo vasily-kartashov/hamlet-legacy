@@ -44,7 +44,12 @@ namespace application
             return new RedirectResource($environment->getCanonicalDomain() . '/en');
         }
 
-        protected function getUid(Request $request) {
+        /**
+         * @param Request $request
+         * @return int|null
+         */
+        protected function getUid(Request $request)
+        {
             $authorization = $request->getHeader('Authorization');
             if (!$authorization) {
                 return null;
