@@ -7,6 +7,7 @@ module Views {
     export class Document {
         constructor(private todoList: TodoList, private textBox: TextBox) {}
         public init(accessToken: string) {
+            console.log(accessToken);
             var service = new Service.Endpoint(accessToken);
             this.todoList.init(service);
             this.textBox.onEnter((content: string) => {
@@ -124,7 +125,7 @@ $(document).ready(function() {
                 var documentView = <Views.Document> Builder.init(document, true);
                 documentView.init(response.authResponse.accessToken);
             } else {
-
+                console.log('not authorized');
             }
         });
     }

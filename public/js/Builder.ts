@@ -44,7 +44,7 @@ module Builder {
             return this.object;
         }
         public checkAssertions() {
-            if (this.object.hasOwnProperty('assert')) {
+            if (typeof this.object.assert === "function") {
                 (<{assert: () => void}>this.object).assert();
             }
             for (var name in this.names) {
@@ -112,12 +112,12 @@ module Builder {
             }
             return scope;
         };
-        var scope: Scope = process(document.body).init();
+        var scope: Scope = process(document.body);
         if (checkAssertions) {
             setInterval(() => {
                 scope.checkAssertions();
-            }, 100);
+            }, 1000);
         }
-        return scope;
+        return scope.init();
     }
 }
