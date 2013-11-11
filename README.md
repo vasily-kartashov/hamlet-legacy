@@ -42,3 +42,29 @@ Example application
 --------------------
 The master branch contains a simple application for documentation purposes. The application is a simple todo list, with
 localizations, smarty templates, restful services and different environments.
+
+
+Typescript
+=====================
+
+Debugging in PHPStorm
+---------------------
+Install the PHPStorm LiveEdit extension
+Preferences -> Plugins -> Install JetBrains Plugin.
+Search for LiveEdit.
+
+Setup the remote mapping using a deployment configuration
+
+Tools -> Deployment -> Configurations
+
+Create a new 'In place' configuration and enter your webserver url. Go to the 'Mappings' tab and map your local filesystem public directory to your webserver root.
+
+IMPORTANT - make sure you make it your default configuration by clicking teh server with teh green tick.
+
+Create a new javascript debug configuration.
+
+Run -> Edit Configurations
+
+Set the url to your server url
+
+
