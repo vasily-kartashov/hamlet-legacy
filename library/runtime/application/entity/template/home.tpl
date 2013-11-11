@@ -5,10 +5,8 @@
     <body data-class="Views.Document(todoList,textBox)">
         <h1>{$greeting}</h1>
         <ul data-ref="todoList" data-class="Views.TodoList(this)"></ul>
-        Add newtem1234: <input data-ref="textBox" data-class="Views.TextBox(this)" />
-
+        Add new item: <input data-ref="textBox" data-class="Views.TextBox(this)" />
         {typescript fileSystemPath="../../../../../public/js" urlPrefix="/js" isDevelopmentMode=true}
-
         <div id="fb-root"></div>
         <script>
             {literal}
