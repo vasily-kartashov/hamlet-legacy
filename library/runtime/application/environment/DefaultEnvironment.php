@@ -16,7 +16,15 @@ namespace application\environment
 
         public function getCanonicalDomain()
         {
-            return 'http://foundation.dev';
+            return $this->getDomain();
+        }
+
+        public function getDomain()
+        {
+
+            $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+            $domainName = $_SERVER['SERVER_NAME'];
+            return $protocol . $domainName;
         }
 
         public function localeExists($localeName)
