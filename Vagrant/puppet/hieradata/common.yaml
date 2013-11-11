@@ -80,6 +80,7 @@ php:
             - cli
             - intl
             - mcrypt
+            - memcached
         pear: {  }
         pecl:
             - pecl_http
@@ -89,10 +90,8 @@ php:
         display_errors: On
         error_reporting: '-1'
         session.save_path: /var/lib/php/session
-        extension : 
-             - memcached.so
 
-    timezone: America/Chicago
+    timezone: Europe/London
 xdebug:
     install: '1'
     settings:
