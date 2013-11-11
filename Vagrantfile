@@ -30,9 +30,6 @@ Vagrant.configure("2") do |config|
     puppet.options = ["--verbose", "--hiera_config /vagrant/Vagrant/hiera.yaml", "--parser future"]
   end
 
-
-
-
   config.ssh.username = "vagrant"
 
   config.ssh.shell = "bash -l"
