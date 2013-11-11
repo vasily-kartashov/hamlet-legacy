@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js {$base.currentLanguage} {$base.textDirection}" prefix="og: http://ogp.me/ns#" dir="{$base.textDirection}" lang="{$base.currentLanguage}">
     <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title>{$base.siteTitle}</title>
 
         <link rel="dns-prefetch" href="//ajax.googleapis.com">
@@ -30,7 +31,14 @@
             {*<meta name="twitter:site" content="{$meta.twitter.site}">*}
         {/block}
 
+        <!--[if lt IE 9]>
+        <script src="/js/vendor/html5shiv.js"></script>
+        <![endif]-->
         <link type="text/css" rel="stylesheet" href="css/application.css">
+
+        <script>
+            document.documentElement.className = document.documentElement.className.replace('no-js','');
+        </script>
                
     </head>
     <body>
