@@ -1,0 +1,6 @@
+http_images_path = '/images'
+http_generated_images_path = '/images'
+sass_dir = 'assets/scss/'
+css_dir = 'public/css/'
+output_style = 'expanded'
+images_dir = 'public/images/'

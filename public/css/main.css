@@ -1,0 +1,17 @@
+/* line 2, ../../assets/scss/main.scss */
+body {
+  font-family: Verdana, serif;
+  font-size: 12px; }
+
+/* line 7, ../../assets/scss/main.scss */
+h1 {
+  font-size: 12px; }
+
+/* line 11, ../../assets/scss/main.scss */
+li {
+  line-height: 28px;
+  cursor: hand; }
+
+/* line 15, ../../assets/scss/main.scss */
+li.done {
+  text-decoration: line-through; }

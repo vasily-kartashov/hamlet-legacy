@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="stylesheet" href="/css/application.css"/>
+        <link rel="stylesheet" href="/css/main.css"/>
     </head>
     <body data-class="Views.Document(todoList,textBox)">
         <h1>{$greeting}</h1>

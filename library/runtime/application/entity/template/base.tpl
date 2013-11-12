@@ -34,7 +34,7 @@
         <!--[if lt IE 9]>
         <script src="/js/vendor/html5shiv.js"></script>
         <![endif]-->
-        <link type="text/css" rel="stylesheet" href="css/application.css">
+        <link type="text/css" rel="stylesheet" href="css/main.css">
 
         <script>
             document.documentElement.className = document.documentElement.className.replace('no-js','');
