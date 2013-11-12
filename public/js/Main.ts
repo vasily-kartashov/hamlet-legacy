@@ -111,8 +111,6 @@ module Service {
     }
 }
 
-declare var window: FacebookWindow;
-
 $(document).ready(function() {
     window.fbAsyncInit = function() {
         FB.init({

@@ -15,7 +15,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-interface FacebookWindow extends Window {
+interface Window {
     fbAsyncInit: () => void;
 }
 
@@ -59,7 +59,7 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Event.subscribe/
          */
-            subscribe: {
+        subscribe: {
             (event: string, callback: (response: any) => void): void;
             (event: "auth.login", callback: (response: LoginStatusResponse) => void): void;
             (event: "auth.authResponseChange", callback: (response: LoginStatusResponse) => void): void;
@@ -77,7 +77,7 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Event.unsubscribe/
          */
-            unsubscribe: {
+        unsubscribe: {
             (event: string, callback: (response: any) => void): void;
             (event: "auth.login", callback: (response: LoginStatusResponse) => void): void;
             (event: "auth.authResponseChange", callback: (response: LoginStatusResponse) => void): void;
@@ -101,7 +101,7 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.XFBML.parse/
          */
-            parse: {
+        parse: {
             (): void;
             (element: HTMLElement): void;
             (element: HTMLElement, callback: () => void): void;
@@ -141,7 +141,7 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Canvas.hideFlashElement/
          */
-            hideFlashElement: {
+        hideFlashElement: {
             (): void;
             (elem: HTMLElement): void;
         };
@@ -149,14 +149,14 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Canvas.scrollTo/
          */
-            scrollTo: {
+        scrollTo: {
             (x: number, y: number): void;
         };
 
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Canvas.setAutoGrow/
          */
-            setAutoGrow: {
+        setAutoGrow: {
             (onOrOff: boolean): void;
             (interval: number): void;
         };
@@ -164,7 +164,7 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Canvas.setDoneLoading/
          */
-            setDoneLoading: {
+        setDoneLoading: {
             (): void;
             (result: TimerResult): void;
         };
@@ -172,7 +172,7 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Canvas.setSize/
          */
-            setSize: {
+        setSize: {
             (): void;
             (size: Size): void;
         };
@@ -180,14 +180,14 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Canvas.setUrlHandler/
          */
-            setUrlHandler: {
+        setUrlHandler: {
             (onUrl: (data: UrlHandlerData) => void): void;
         };
 
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Canvas.showFlashElement/
          */
-            showFlashElement: {
+        showFlashElement: {
             (): void;
             (elem: HTMLElement): void;
         };
@@ -195,14 +195,14 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Canvas.startTimer/
          */
-            startTimer: {
+        startTimer: {
             (): void;
         };
 
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Canvas.stopTimer/
          */
-            stopTimer: {
+        stopTimer: {
             (): void;
             (callback: (result: TimerResult) => void): void;
         };
@@ -219,14 +219,14 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Canvas.Prefetcher.addStaticResource/
          */
-            addStaticResource: {
+        addStaticResource: {
             (url: string): void;
         };
 
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.Canvas.Prefetcher.setCollectionMode/
          */
-            setCollectionMode: {
+        setCollectionMode: {
             (mode: string): void;
         };
     }
@@ -405,12 +405,12 @@ declare module Facebook {
          * https://developers.facebook.com/docs/reference/javascript/FB.api/
          * @todo huge thing to implement
          */
-            api: {};
+        api: {};
 
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.init/
          */
-            init: {
+        init: {
             (options: InitOptions): void;
         };
 
@@ -419,7 +419,7 @@ declare module Facebook {
          * @todo add login dialog
          * @todo check redirect_uri param
          */
-            ui: {
+        ui: {
             (params: FeedDialogParams, callback: (response: FeedDialogResponse) => void): void;
             (params: RequestsDialogParams, callback: (response: RequestDialogResponse) => void): void;
             (params: SendDialogParams): void;
@@ -431,21 +431,21 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.getAuthResponse/
          */
-            getAuthResponse: {
+        getAuthResponse: {
             (): AuthResponse;
         };
 
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus/
          */
-            getLoginStatus: {
+        getLoginStatus: {
             (callback: (response: LoginStatusResponse) => void): void;
         };
 
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.login/
          */
-            login: {
+        login: {
             (callback: (response: LoginStatusResponse) => void): void;
             (callback: (response: LoginStatusResponse) => void, options: LoginOptions): void;
         };
@@ -453,7 +453,7 @@ declare module Facebook {
         /**
          * https://developers.facebook.com/docs/reference/javascript/FB.logout/
          */
-            logout: {
+        logout: {
             (callback: (response: LoginStatusResponse) => void): void;
         };
     }
