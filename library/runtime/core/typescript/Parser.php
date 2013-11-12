@@ -11,7 +11,7 @@ namespace core\typescript
                 throw new Exception("The path '{$dirPath}' does not exist");
             }
             $result = array();
-            $paths = $this->collectPaths($dirPath, 'Main');
+            $paths = $this->collectPaths($dirPath, 'Main',array());
             $base = realPath($dirPath);
             $baseLength = strlen($base);
             foreach ($paths as $path) {
@@ -23,11 +23,11 @@ namespace core\typescript
             return $result;
         }
 
-        private function collectPaths($basePath, $relativePath) {
+        private function collectPaths($basePath, $relativePath, $pathsVisited) {
 
             $result = array();
-
             $fullPath = "{$basePath}/{$relativePath}.ts";
+            $pathsVisited[] = $fullPath;
             $dirName = dirname($fullPath);
 
             $content = preg_replace('#\s+#', '', file_get_contents($fullPath));
@@ -36,10 +36,13 @@ namespace core\typescript
             foreach ($matches[1] as $match) {
 
                 // for all typescript files process them
-                if (file_exists("{$dirName}/{$match}.ts")) {
-                    foreach ($this->collectPaths($dirName, $match) as $dependency) {
-                        if (!in_array($dependency, $result)) {
-                            $result[] = $dependency;
+                $filePath = "{$dirName}/{$match}.ts";
+                if (file_exists($filePath)) {
+                    if (!in_array($filePath, $pathsVisited)) {
+                        foreach ($this->collectPaths($dirName, $match,$pathsVisited) as $dependency) {
+                            if (!in_array($dependency, $result)) {
+                                $result[] = $dependency;
+                            }
                         }
                     }
                 }
