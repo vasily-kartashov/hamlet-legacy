@@ -1,5 +1,5 @@
 <?php
 function smarty_modifier_json($value)
 {
-    return htmlentities(json_encode($value));
+    return json_encode($value);
 }

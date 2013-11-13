@@ -2,8 +2,8 @@
 namespace application
 {
     use application\entity\HomePageEntity;
-    use application\environment\DefaultEnvironment;
-    use application\environment\ProductionEnvironment;
+    use application\environment\Environment;
+    use application\environment\DevelopmentEnvironment;
     use application\resource\ItemResource;
     use application\resource\ItemsListResource;
     use core\Application;
@@ -37,7 +37,7 @@ namespace application
                 if ($environment->localeExists($matches['localeName'])) {
                     $locale = $environment->getLocale($matches['localeName']);
                     if ($request->pathMatchesPattern('/*')) {
-                        return new EntityResource(new HomePageEntity($locale));
+                        return new EntityResource(new HomePageEntity($locale,$environment));
                     }
                 }
             }
@@ -73,9 +73,9 @@ namespace application
         private function getEnvironment(Request $request)
         {
             if ($request->getEnvironmentName() == 'foundation.dev') {
-                return new DefaultEnvironment();
+                return new DevelopmentEnvironment();
             }
-            return new ProductionEnvironment();
+            return new Environment();
         }
     }
 }

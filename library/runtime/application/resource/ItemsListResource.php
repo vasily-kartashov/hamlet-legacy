@@ -3,7 +3,7 @@ namespace application\resource
 {
     use application\entity\ItemEntity;
     use application\entity\ItemsListEntity;
-    use application\environment\DefaultEnvironment;
+    use application\environment\Environment;
     use core\entity\LocatedEntity;
     use core\request\Request;
     use core\resource\CollectionResource;
@@ -13,7 +13,7 @@ namespace application\resource
         private $environment;
         private $uid;
 
-        public function __construct(DefaultEnvironment $environment, $uid)
+        public function __construct(Environment $environment, $uid)
         {
             $this->environment = $environment;
             $this->uid = $uid;

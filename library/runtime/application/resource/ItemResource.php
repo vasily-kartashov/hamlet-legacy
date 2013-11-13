@@ -2,7 +2,7 @@
 namespace application\resource
 {
     use application\entity\ItemEntity;
-    use application\environment\DefaultEnvironment;
+    use application\environment\Environment;
     use core\request\Request;
     use core\resource\CollectionElementResource;
     use core\response\BadRequestResponse;
@@ -15,7 +15,7 @@ namespace application\resource
         private $itemId;
         private $operation;
 
-        public function __construct(DefaultEnvironment $environment, $itemId, $uid, $operation = null)
+        public function __construct(Environment $environment, $itemId, $uid, $operation = null)
         {
             $this->environment = $environment;
             $this->itemId = $itemId;

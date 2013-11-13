@@ -1,4 +1,4 @@
-/// <reference path="jquery-2.0.3.d"/>
+/// <reference path="vendor/jquery-2.0.3.d"/>
 
 module Assert {
     export function hasData($el: JQuery, name: string, message: string = '') {

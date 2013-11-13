@@ -1,0 +1,1 @@
+{"version":3,"file":"Environment.js","sourceRoot":"","sources":["Environment.ts"],"names":["Environment","Environment.constructor","Environment.getFacebookAppId"],"mappings":"AAAA;;EAEG;AAUH;IAIIA,qBAAYA,IAAsBA;QAE9BC,IAAIA,CAACA,aAAaA,GAAGA,IAAIA,CAACA,aAAaA,CAACA;IAC5CA,CAACA;IAEDD,yCAAAA;QAEIE,OAAOA,IAAIA,CAACA,aAAaA,CAACA;IAC9BA,CAACA;IACLF;AAACA,CAAAA,IAAA"}

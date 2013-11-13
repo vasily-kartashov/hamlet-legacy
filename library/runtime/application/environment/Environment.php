@@ -5,7 +5,7 @@ namespace application\environment
     use application\locale\Locale;
     use SQLite3;
 
-    class DefaultEnvironment
+    class Environment
     {
         protected $databaseService = null;
 
@@ -105,6 +105,16 @@ namespace application\environment
                 $this->databaseService = new DatabaseService($this->getDatabase());
             }
             return $this->databaseService;
+        }
+
+        public function getFacebookAppId()
+        {
+            return '543290215752753';
+        }
+
+        public function useConcatenatedJavascript()
+        {
+            return true;
         }
     }
 }

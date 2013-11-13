@@ -8,7 +8,7 @@ function smarty_function_typescript($params, Smarty_Internal_Template &$smarty)
         $parser = new \core\typescript\Parser();
         $code = '';
         foreach ($parser->collectDependencies($dirPath) as $dependency) {
-            $code .= '<script type="text/javascript" src="' . $params['urlPrefix'] . '/' . $dependency . '?' . time()  . '"></script>';
+            $code .= '<script type="text/javascript" src="' . $params['urlPrefix'] . '/' . $dependency . '?' . time()  . '"></script>' . PHP_EOL;
         }
     }
     return $code;
