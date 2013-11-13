@@ -44,7 +44,7 @@ namespace application\entity
 
         protected function getBodyDataClass()
         {
-            return 'Views.Document(todoList,textBox)';
+            return 'HomePage(todoList,textBox)';
         }
     }
 }
