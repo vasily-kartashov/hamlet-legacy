@@ -14,8 +14,21 @@ class Application {
 
     constructor( private environment : Environment)
     {
-        window.fbAsyncInit = ()=> this.facebookInit();
+        this.loadFacebookSDK(()=> this.initFacebook());
         $(document).ready(()=> this.onReady());
+    }
+
+
+    private loadFacebookSDK(callback : Function)
+    {
+        window.fbAsyncInit = ()=> this.initFacebook();
+        (function(d){
+            var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/es_LA/all.js";
+            d.getElementsByTagName('head')[0].appendChild(js);
+        }(document));
+
     }
 
     private onReady()
@@ -23,7 +36,7 @@ class Application {
 
     }
 
-    private facebookInit()
+    private initFacebook()
     {
         FB.init({
             appId: this.environment.getFacebookAppId(),

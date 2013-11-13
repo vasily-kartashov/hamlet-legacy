@@ -52,21 +52,12 @@
     {block "scripts"}
 
         <script type="text/javascript">
-
             window.__environment = {$base.jsEnvironment|json};
-
-            {literal}
-            (function(d){
-                var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-                js = d.createElement('script'); js.id = id; js.async = true;
-                js.src = "//connect.facebook.net/es_LA/all.js";
-                d.getElementsByTagName('head')[0].appendChild(js);
-            }(document));
-            {/literal}
-
         </script>
 
         {typescript fileSystemPath="../../../../../public/js" urlPrefix="/js" isDevelopmentMode=!$base.concatenateJs}
+
+
 
 
     {/block}
