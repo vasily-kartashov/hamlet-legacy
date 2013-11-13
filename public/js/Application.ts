@@ -19,9 +19,9 @@ class Application {
     }
 
 
-    private loadFacebookSDK(callback : Function)
+    private loadFacebookSDK(callback : ()=>void)
     {
-        window.fbAsyncInit = ()=> this.initFacebook();
+        window.fbAsyncInit = callback;
         (function(d){
             var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
             js = d.createElement('script'); js.id = id; js.async = true;

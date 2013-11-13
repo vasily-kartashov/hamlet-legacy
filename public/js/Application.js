@@ -18,10 +18,7 @@ var Application = (function () {
         });
     }
     Application.prototype.loadFacebookSDK = function (callback) {
-        var _this = this;
-        window.fbAsyncInit = function () {
-            return _this.initFacebook();
-        };
+        window.fbAsyncInit = callback;
         ((function (d) {
             var js, id = 'facebook-jssdk';
             if (d.getElementById(id)) {
