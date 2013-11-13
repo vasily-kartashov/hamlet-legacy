@@ -2,14 +2,16 @@
  * Created by danny on 13/11/2013.
  * De-dannyfied by vasily on 13/11/2013
  */
+
 ///<reference path="Environment"/>
 ///<reference path="vendor/jquery-2.0.3.d"/>
 ///<reference path="vendor/facebook.d"/>
 ///<reference path="Builder"/>
 ///<reference path="Views"/>
+///<reference path="HomePage"/>
 
 class Application {
-    
+
     constructor(private environment: Environment) {
         this.loadFacebookSDK(() => this.initFacebook());
         $(document).ready(() => this.onReady());
@@ -17,13 +19,11 @@ class Application {
 
     private loadFacebookSDK(callback : () => void) {
         window.fbAsyncInit = callback;
-        (function(d){
-            var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-            js = d.createElement('script'); js.id = id; js.async = true;
-            js.src = "//connect.facebook.net/es_LA/all.js";
-            d.getElementsByTagName('head')[0].appendChild(js);
-        }(document));
-
+        var d = document;
+        var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/es_LA/all.js";
+        d.getElementsByTagName('head')[0].appendChild(js);
     }
 
     private onReady() {}
@@ -36,7 +36,7 @@ class Application {
         });
         FB.login(function(response) {
             if (response.authResponse) {
-                var documentView = <Views.Document> Builder.init(document, true);
+                var documentView = <BasePage> Builder.init(document, true);
                 documentView.init(response.authResponse.accessToken);
             } else {
                 console.log('not authorized');

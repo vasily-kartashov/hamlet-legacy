@@ -22,7 +22,7 @@ module Builder {
                             }
                         } else {
                             if (this.names[name] == null) {
-                                throw "Name " + name + " is not initialized in the scope";
+                                throw new Error('Constructor argument ' + name + ' for class ' + this.className + ' has not been defined in the scope');
                             }
                             argument = (<Scope> this.names[name]).init();
                         }
@@ -34,7 +34,7 @@ module Builder {
                         if (namespaces[i] in currentNamespace) {
                             currentNamespace = currentNamespace[namespaces[i]];
                         } else {
-                            throw "Namespace '" + namespaces[i] + "' not defined in '" + this.className + "'";
+                            throw new Error('Class ' + this.className + ' is undefined') ;
                         }
                     }
                     this.object = Object.create(currentNamespace.prototype);
@@ -58,7 +58,7 @@ module Builder {
                 if (this.parent) {
                     this.parent.addName(name, scope);
                 } else {
-                    throw "Cannot bind " + name;
+                    throw Error('Ref ' + name + ' cannot be bound. ( No parent view defines "' + name + '" in its constructor )');
                 }
             } else {
                 if (name.substr(-2, 2) == '[]') {

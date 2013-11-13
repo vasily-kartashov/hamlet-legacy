@@ -7,6 +7,7 @@
 ///<reference path="vendor/facebook.d"/>
 ///<reference path="Builder"/>
 ///<reference path="Views"/>
+///<reference path="HomePage"/>
 var Application = (function () {
     function Application(environment) {
         var _this = this;
@@ -20,17 +21,16 @@ var Application = (function () {
     }
     Application.prototype.loadFacebookSDK = function (callback) {
         window.fbAsyncInit = callback;
-        ((function (d) {
-            var js, id = 'facebook-jssdk';
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement('script');
-            js.id = id;
-            js.async = true;
-            js.src = "//connect.facebook.net/es_LA/all.js";
-            d.getElementsByTagName('head')[0].appendChild(js);
-        })(document));
+        var d = document;
+        var js, id = 'facebook-jssdk';
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement('script');
+        js.id = id;
+        js.async = true;
+        js.src = "//connect.facebook.net/es_LA/all.js";
+        d.getElementsByTagName('head')[0].appendChild(js);
     };
 
     Application.prototype.onReady = function () {
