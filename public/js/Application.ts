@@ -9,6 +9,7 @@
 ///<reference path="Views"/>
 
 class Application {
+    
     constructor(private environment: Environment) {
         this.loadFacebookSDK(() => this.initFacebook());
         $(document).ready(() => this.onReady());
