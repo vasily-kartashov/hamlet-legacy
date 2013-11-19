@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="name-of-project" default="empty">
+    <tstamp>
+        <format property="time" pattern="yyyy-MM-dd-hh-mm"/>
+    </tstamp>
+    <target name="prepare">
+        <echo>Please specify a target</echo>
+    </target>
+    <target name="deploy.integration">
+        <exec executable="php">
+            <arg value="${basedir}/utils/create-library-loader/run.php"/>
+        </exec>
+        <exec executable="php">
+            <arg value="${basedir}/utils/google-drive-import/run.php"/>
+        </exec>
+        <exec executable="php">
+            <arg value="${basedir}/utils/combine-javascript/run.php"/>
+        </exec>
+    </target>
+    <target name="deploy.preview">
+        <!--<apply executable="jpegtran" verbose="true" force="true">-->
+        <!--<arg line="-copy none"/>-->
+        <!--<arg value="-optimize"/>-->
+        <!--<arg value="-perfect"/>-->
+        <!--<arg value="-progressive"/>-->
+        <!--<arg value="-outfile"/>-->
+        <!--<srcfile/>-->
+        <!--<targetfile/>-->
+        <!--<fileset dir="${basedir}">-->
+        <!--<include name="public/images/content/**/*.jpg"/>-->
+        <!--</fileset>-->
+        <!--<mapper type="identity"/>-->
+        <!--</apply>-->
+        <apply executable="java" force="true">
+            <arg line="-jar ${basedir}/utils/yuicompressor-2.4.7.jar"/>
+            <srcfile/>
+            <arg value="-o"/>
+            <targetfile/>
+            <fileset dir="${basedir}">
+            <include name="public/css/**/*.css"/>
+            <!--<include name="public/js/**/*.js"/>-->
+            </fileset>
+            <mapper type="identity"/>
+        </apply>
+        <exec executable="php">
+            <arg value="${basedir}/utils/add-build-number/run.php"/>
+            <arg value="${time}"/>
+        </exec>
+        <exec executable="zip">
+            <arg line="-r"/>
+            <arg value="--exclude=*.svn*"/>
+            <arg value="rus-transat-${time}.zip"/>
+            <arg value="library"/>
+            <arg value="public"/>
+        </exec>
+    </target>
+</project>
+

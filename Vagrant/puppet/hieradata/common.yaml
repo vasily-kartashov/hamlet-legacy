@@ -46,7 +46,8 @@ vagrantfile-local:
     vagrant:
         host: ':detect'
 server:
-    packages: 
+    packages:
+        - memcached
         - libmemcached-dev
     dot_files:
         -
@@ -57,6 +58,7 @@ apache:
         - php
         - rewrite
         - expires
+        - headers
     vhosts:
         kCk7o9Gj6b5M:
             servername: "*.dev"
