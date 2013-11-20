@@ -78,7 +78,7 @@ namespace application\environment
                 }
             }
             $localeNames = $this->getLocaleNames();
-            return new Locale($data,$localeNames[$localeName]);
+            return new Locale($data,$localeNames[$localeName],$localeName);
         }
 
         protected function getDatabase()

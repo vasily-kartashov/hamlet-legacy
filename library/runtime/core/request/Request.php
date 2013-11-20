@@ -20,6 +20,11 @@ namespace core\request
          */
         abstract public function getEnvironmentName();
 
+        public function environmentNameEndsWith($suffix)
+        {
+            return $suffix === "" || substr($this->getEnvironmentName(), -strlen($suffix)) === $suffix;
+        }
+
         /**
          * Get current IP address
          * @return string

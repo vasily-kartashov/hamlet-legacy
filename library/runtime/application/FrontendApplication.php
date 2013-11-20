@@ -1,14 +1,13 @@
 <?php
 namespace application
 {
-    use application\entity\HomePageEntity;
     use application\environment\Environment;
     use application\environment\DevelopmentEnvironment;
+    use application\environment\PreviewEnvironment;
     use application\resource\ItemResource;
     use application\resource\ItemsListResource;
     use core\Application;
     use core\request\Request;
-    use core\resource\EntityResource;
     use core\resource\RedirectResource;
     use Memcached;
 
@@ -36,9 +35,8 @@ namespace application
             if ($matches = $request->pathStartsWithPattern('/{localeName}')) {
                 if ($environment->localeExists($matches['localeName'])) {
                     $locale = $environment->getLocale($matches['localeName']);
-                    if ($request->pathMatchesPattern('/*')) {
-                        return new EntityResource(new HomePageEntity($locale,$environment));
-                    }
+                    $localeRouter = new LocaleRouter($locale,$environment);
+                    return $localeRouter->findResource($request);
                 }
             }
             return new RedirectResource($environment->getCanonicalDomain() . '/en');
@@ -72,8 +70,14 @@ namespace application
 
         private function getEnvironment(Request $request)
         {
-            if ($request->getEnvironmentName() == 'foundation.dev') {
+            if ($request->environmentNameEndsWith('.dev')) {
                 return new DevelopmentEnvironment();
+            }
+            if ($request->environmentNameEndsWith('-preview.integration.etectureogilvy.com')) {
+                return new PreviewEnvironment();
+            }
+            if ($request->environmentNameEndsWith('.integration.etectureogilvy.com')) {
+                return new PreviewEnvironment();
             }
             return new Environment();
         }

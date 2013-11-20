@@ -5,12 +5,14 @@ namespace application\locale
     {
         protected $data;
         protected $languageCode;
+        protected $localeName;
         const SKIP = '[SKIP]';
 
-        public function __construct($data, $languageCode)
+        public function __construct($data, $languageCode,$localeName)
         {
             $this->data = $data;
             $this->languageCode = $languageCode;
+            $this->localeName = $localeName;
         }
 
         public function translate($token)
@@ -45,5 +47,11 @@ namespace application\locale
         {
             return 'ltr';
         }
+
+        public function getLocaleName()
+        {
+            return $this->localeName;
+        }
+
     }
 }
