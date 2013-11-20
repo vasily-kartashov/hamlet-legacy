@@ -42,6 +42,46 @@ namespace application\entity
             return $this->locale->translate($token);
         }
 
+        protected function translateOr($token, $else="")
+        {
+            $trans = $this->locale->translate($token);
+            if ($trans === $token) {
+                return $else;
+            }
+            return $trans;
+        }
+
+        protected function translateButton($token,$url=null)
+        {
+            if(is_null($url)){
+                $url =  $this->locale->translate($token . '-url');
+            }
+            return $this->createButton($this->locale->translate($token . '-copy'),$url,$this->locale->translate($token . '-title'));
+
+        }
+
+        protected function createButton($copy,$url,$title)
+        {
+            $button = array(
+                'copy' => $copy,
+                'title' => $title,
+                'url' => $url,
+            );
+            return $button;
+        }
+
+        protected function translateImage($token)
+        {
+            return array(
+                'src' => $this->translateImageSrc($token . '-src'),
+                'alt' => $this->locale->translate($token . '-alt')
+            );
+        }
+
+        protected function translateImageSrc($token)
+        {
+            return  '/images/content/' . $this->locale->translate($token);
+        }
 
         protected function getMetaData()
         {
