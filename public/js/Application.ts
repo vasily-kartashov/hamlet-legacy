@@ -6,9 +6,9 @@
 ///<reference path="Environment"/>
 ///<reference path="vendor/jquery-2.0.3.d"/>
 ///<reference path="vendor/facebook.d"/>
-///<reference path="Builder"/>
 ///<reference path="Views"/>
 ///<reference path="HomePage"/>
+///<reference path="Container"/>
 
 class Application {
 
@@ -36,7 +36,8 @@ class Application {
         });
         FB.login(function(response) {
             if (response.authResponse) {
-                var documentView = <BasePage> Builder.init(document, true);
+                var scope = Container.load(<HTMLElement>document.documentElement);
+                var documentView = <BasePage> scope.getFirstInstance('pageView');
                 documentView.init(response.authResponse.accessToken);
             } else {
                 console.log('not authorized');

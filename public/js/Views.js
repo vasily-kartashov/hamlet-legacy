@@ -17,7 +17,7 @@ var Views;
             var service = new Service.Endpoint(accessToken);
             this.todoList.init(service);
             this.textBox.onEnter(function (content) {
-                _this.todoList.addItem(content);
+                return _this.todoList.addItem(content);
             });
         };
         return Document;

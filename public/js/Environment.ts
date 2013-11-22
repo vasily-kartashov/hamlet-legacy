@@ -16,4 +16,5 @@ class Environment {
     public getFacebookAppId(): string {
         return this.facebookAppId;
     }
+
 }

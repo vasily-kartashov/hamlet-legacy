@@ -5,9 +5,9 @@
 ///<reference path="Environment"/>
 ///<reference path="vendor/jquery-2.0.3.d"/>
 ///<reference path="vendor/facebook.d"/>
-///<reference path="Builder"/>
 ///<reference path="Views"/>
 ///<reference path="HomePage"/>
+///<reference path="Container"/>
 var Application = (function () {
     function Application(environment) {
         var _this = this;
@@ -44,7 +44,8 @@ var Application = (function () {
         });
         FB.login(function (response) {
             if (response.authResponse) {
-                var documentView = Builder.init(document, true);
+                var scope = Container.load(document.documentElement);
+                var documentView = scope.getFirstInstance('pageView');
                 documentView.init(response.authResponse.accessToken);
             } else {
                 console.log('not authorized');

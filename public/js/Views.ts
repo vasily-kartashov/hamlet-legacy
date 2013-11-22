@@ -13,9 +13,8 @@ module Views {
             console.log(accessToken);
             var service = new Service.Endpoint(accessToken);
             this.todoList.init(service);
-            this.textBox.onEnter((content: string) => {
-                this.todoList.addItem(content);
-            });
+            this.textBox.onEnter((content: string) => this.todoList.addItem(content));
+
         }
     }
     export class TodoList {
