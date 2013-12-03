@@ -36,8 +36,8 @@ namespace core\typescript
             foreach ($matches[1] as $match) {
 
                 // for all typescript files process them
-                $filePath = "{$dirName}/{$match}.ts";
-                if (file_exists($filePath)) {
+                $filePath = realpath("{$dirName}/{$match}.ts");
+                if ($filePath) {
                     if (!in_array($filePath, $pathsVisited)) {
                         foreach ($this->collectPaths($dirName, $match,$pathsVisited) as $dependency) {
                             if (!in_array($dependency, $result)) {
@@ -46,10 +46,11 @@ namespace core\typescript
                         }
                     }
                 }
+
                 // add the corresponding javascript file
                 $cleanName = (substr($match, -2) == '.d') ? substr($match, 0, -2) : $match;
-                $dependency = "{$dirName}/{$cleanName}.js";
-                if (file_exists($dependency)) {
+                $dependency = realpath("{$dirName}/{$cleanName}.js");
+                if ($dependency) {
                     if (!in_array($dependency, $result)) {
                         $result[] = $dependency;
                     }
@@ -58,8 +59,8 @@ namespace core\typescript
 
             // add itself
             $cleanName = (substr($relativePath, -2) == '.d') ? substr($relativePath, 0, -2) : $relativePath;
-            $dependency = "{$basePath}/{$cleanName}.js";
-            if (file_exists($dependency)) {
+            $dependency = realpath("{$basePath}/{$cleanName}.js");
+            if ($dependency) {
                 if (!in_array($dependency, $result)) {
                     $result[] = $dependency;
                 }
