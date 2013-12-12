@@ -1,15 +1,13 @@
 <?php
 namespace core\request
 {
-    use PHPUnit_Framework_TestCase;
+    use UnitTestCase;
 
-    class RequestTestCase extends PHPUnit_Framework_TestCase
+    class RequestTestCase extends UnitTestCase
     {
-        /*
         public function testDummy()
         {
             $this->assertTrue(true);
         }
-        */
     }
 }
