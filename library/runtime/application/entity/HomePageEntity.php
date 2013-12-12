@@ -30,7 +30,7 @@ namespace application\entity
         protected function getContentData()
         {
             return array(
-                'greeting' => $this->locale->translate('token-hello')
+                'greeting' => $this->locale->translate('token-hello'),
             );
         }
 
@@ -40,11 +40,6 @@ namespace application\entity
         protected function getPageTitle()
         {
             return 'Homepage';
-        }
-
-        protected function getBodyDataClass()
-        {
-            return 'HomePage(todoList,textBox)';
         }
     }
 }
