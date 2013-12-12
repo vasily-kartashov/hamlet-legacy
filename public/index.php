@@ -1,4 +1,5 @@
 <?php
+http_response_code(500);
 require(__DIR__ . '/../library/runtime.php');
 
 $application = new \application\FrontendApplication();
