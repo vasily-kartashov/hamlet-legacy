@@ -3,7 +3,6 @@ namespace application\task
 {
     use core\task\googledrive\GoogleDriveFolderTask;
     use Google_DriveService;
-    use core\task\googledrive\GoogleDriveTask;
 
     class GoogleDriveImportImagesTask extends GoogleDriveFolderTask
     {
