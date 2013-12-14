@@ -54,17 +54,17 @@ Preferences -> Plugins -> Install JetBrains Plugin.
 Search for LiveEdit.
 
 Setup the remote mapping using a deployment configuration
-
 Tools -> Deployment -> Configurations
-
-Create a new 'In place' configuration and enter your webserver url. Go to the 'Mappings' tab and map your local filesystem public directory to your webserver root.
-
+Create a new 'In place' configuration and enter your webserver url. Go to the 'Mappings' tab and map your local
+filesystem public directory to your webserver root.
 IMPORTANT - make sure you make it your default configuration by clicking teh server with teh green tick.
-
 Create a new javascript debug configuration.
-
 Run -> Edit Configurations
-
 Set the url to your server url
 
+DOMinatrix
+=====================
+* The usual initialization sequence is bottom to top (toward the root of the tree) through constructors and than back
+  from the root to the top of the tree through init methods
+* The constructor signatures in the template and TypeScript files should match otherwise the container will compliant.
 
