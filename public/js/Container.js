@@ -1,6 +1,3 @@
-/**
-* Created by danny on 20/11/2013.
-*/
 var Container;
 (function (Container) {
     var isDebugMode;
@@ -83,6 +80,7 @@ var Container;
         };
         Scope.prototype.init = function () {
             for (var name in this.beans) {
+                //noinspection JSUnfilteredForInLoop
                 var beans = this.beans[name];
                 for (var i = 0, l = beans.length; i < l; i++) {
                     beans[i].getInstance();
@@ -92,6 +90,7 @@ var Container;
         Scope.prototype.getFirstInstance = function (name) {
             if (this.beans.hasOwnProperty(name)) {
                 for (var i in this.beans[name]) {
+                    //noinspection JSUnfilteredForInLoop
                     return this.beans[name][i].getInstance();
                 }
             }
@@ -100,6 +99,7 @@ var Container;
         Scope.prototype.getNames = function () {
             var result = [];
             for (var name in this.beans) {
+                //noinspection JSUnfilteredForInLoop
                 result.push(name);
             }
             return result;
@@ -117,7 +117,7 @@ var Container;
             this.slots = [];
             var colonPosition = initialisationCode.indexOf(':');
             if (colonPosition == -1) {
-                throw new Error("Wrong initilisation code '" + initialisationCode + "'");
+                throw new Error("Wrong initialisation code '" + initialisationCode + "'");
             }
             this.name = initialisationCode.substr(0, colonPosition);
             log("Bean name: " + this.name);
@@ -188,12 +188,25 @@ var Container;
                     }
                 }
                 this.instance = Object.create(currentNamespace.prototype);
+                var args = this.getArguments(this.instance.constructor);
+                if (args.length != this.slots.length) {
+                    throw new Error("Different signature lengths");
+                }
+                for (var i = 0, l = args.length; i < l; i++) {
+                    var name = this.slots[i].getName();
+                    if (name != 'this' && name != args[i]) {
+                        throw new Error("Signatures mismatch '" + name + "' and '" + args[i] + "'");
+                    }
+                }
                 this.instance.constructor.apply(this.instance, arguments);
             }
             return this.instance;
         };
         Bean.prototype.getScope = function () {
             return this.currentScope;
+        };
+        Bean.prototype.getArguments = function (f) {
+            return f.toString().match(/\(.*?\)/)[0].replace(/[()]/gi, '').replace(/\s/gi, '').split(',');
         };
         return Bean;
     })();

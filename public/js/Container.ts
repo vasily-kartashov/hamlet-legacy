@@ -38,7 +38,7 @@ module Container {
             [name: string]: Bean[];
         } = {};
 
-        constructor(private slots: Slot[] =[], private parentScope: Scope = null) {}
+        constructor(private slots: Slot[] = [], private parentScope: Scope = null) {}
 
         public getBeans(name: string): Bean[] {
             if (this.beans.hasOwnProperty(name)) {
@@ -75,6 +75,7 @@ module Container {
         }
         public init() {
             for (var name in this.beans) {
+                //noinspection JSUnfilteredForInLoop
                 var beans: Bean[] = this.beans[name];
                 for (var i = 0, l = beans.length; i < l; i++) {
                     beans[i].getInstance();
@@ -84,7 +85,9 @@ module Container {
         public getFirstInstance(name: string): any {
 
             if (this.beans.hasOwnProperty(name)) {
+                //noinspection LoopStatementThatDoesntLoopJS
                 for (var i in this.beans[name]) {
+                    //noinspection JSUnfilteredForInLoop
                     return this.beans[name][i].getInstance();
                 }
             }
@@ -93,6 +96,7 @@ module Container {
         public getNames(): string[]{
             var result: string[] = [];
             for (var name in this.beans) {
+                //noinspection JSUnfilteredForInLoop
                 result.push(name);
             }
             return result;
@@ -111,7 +115,7 @@ module Container {
             this.slots = [];
             var colonPosition = initialisationCode.indexOf(':');
             if (colonPosition == -1) {
-                throw new Error("Wrong initilisation code '" + initialisationCode + "'");
+                throw new Error("Wrong initialisation code '" + initialisationCode + "'");
             }
             this.name = initialisationCode.substr(0, colonPosition);
             log("Bean name: " + this.name);
@@ -182,12 +186,25 @@ module Container {
                     }
                 }
                 this.instance = Object.create(currentNamespace.prototype);
+                var args = this.getArguments(this.instance.constructor)
+                if (args.length != this.slots.length) {
+                    throw new Error("Different signature lengths");
+                }
+                for (var i = 0, l = args.length; i < l; i++) {
+                    var name = this.slots[i].getName();
+                    if (name != 'this' && name != args[i]) {
+                        throw new Error("Signatures mismatch '" + name + "' and '" + args[i] + "'")
+                    }
+                }
                 this.instance.constructor.apply(this.instance, arguments);
             }
             return this.instance;
         }
         public getScope(): Scope {
             return this.currentScope;
+        }
+        private getArguments(f): string[] {
+            return f.toString().match(/\(.*?\)/)[0].replace(/[()]/gi,'').replace(/\s/gi,'').split(',');
         }
     }
 

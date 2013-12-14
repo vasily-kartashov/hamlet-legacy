@@ -91,29 +91,5 @@ namespace core\typescript
                 'js' => $javaScriptFiles,
             );
         }
-
-        public function parseSignatures()
-        {
-            foreach ($this->paths['ts'] as $path) {
-                $content = file_get_contents($path);
-                $content = $this->removeComments($content);
-                $content = $this->removeStrings($content);
-
-
-            }
-        }
-
-        private function removeComments($content)
-        {
-            $content = preg_replace('|//.*$|m', '', $content);
-            $content = preg_replace('|/\*.*?\*/|ms', '', $content);
-            return $content;
-        }
-
-        private function removeStrings($content)
-        {
-            // @todo
-            return $content;
-        }
     }
 }
