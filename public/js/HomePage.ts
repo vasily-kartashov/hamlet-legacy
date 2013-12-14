@@ -1,7 +1,3 @@
-/**
- * Created by danny on 13/11/2013.
- */
-
 ///<reference path="BasePage"/>
 /// <reference path="Views"/>
 

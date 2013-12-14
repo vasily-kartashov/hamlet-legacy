@@ -1,7 +1,3 @@
-/**
- * Created by danny on 13/11/2013.
- */
-
 /// <reference path="vendor/jquery-2.0.3.d"/>
 /// <reference path="Service"/>
 /// <reference path="Assert"/>

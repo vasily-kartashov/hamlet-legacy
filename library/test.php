@@ -5,6 +5,7 @@ spl_autoload_register(function($className) {
     if (!is_array($map)) {
         $map = array(
 			'core\\request\\RequestTestCase' => __DIR__ . '/test/core/request/RequestTestCase.php',
+			'core\\typescript\\ParserTestCase' => __DIR__ . '/test/core/typescript/ParserTestCase.php',
 			'SimpleArguments' => __DIR__ . '/test/vendors/simpletest-1.1.0/arguments.php',
 			'SimpleHelp' => __DIR__ . '/test/vendors/simpletest-1.1.0/arguments.php',
 			'SimpleRealm' => __DIR__ . '/test/vendors/simpletest-1.1.0/authentication.php',

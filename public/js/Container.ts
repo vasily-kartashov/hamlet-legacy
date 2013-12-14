@@ -1,6 +1,3 @@
-/**
- * Created by danny on 20/11/2013.
- */
 module Container {
 
     var isDebugMode;
