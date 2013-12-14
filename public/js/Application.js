@@ -1,7 +1,3 @@
-/**
-* Created by danny on 13/11/2013.
-* De-dannyfied by vasily on 13/11/2013
-*/
 ///<reference path="Environment"/>
 ///<reference path="vendor/jquery-2.0.3.d"/>
 ///<reference path="vendor/facebook.d"/>

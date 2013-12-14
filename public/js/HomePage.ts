@@ -8,7 +8,6 @@ class HomePage extends BasePage {
     }
 
     public init(facebookAccessToken: string) {
-        console.log(facebookAccessToken);
         var service = new Service.Endpoint(facebookAccessToken);
         this.todoList.init(service);
         this.textBox.onEnter((content: string) => this.todoList.addItem(content));

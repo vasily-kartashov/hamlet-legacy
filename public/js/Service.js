@@ -1,6 +1,3 @@
-/**
-* Created by danny on 13/11/2013.
-*/
 ///<reference path="vendor/jquery-2.0.3.d"/>
 var Service;
 (function (Service) {

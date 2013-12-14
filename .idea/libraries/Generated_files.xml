@@ -2,23 +2,29 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/public/js/Container.js" />
+        <item url="file://$PROJECT_DIR$/public/js/Environment.js" />
+        <item url="file://$PROJECT_DIR$/public/js/Main.js" />
+        <item url="file://$PROJECT_DIR$/public/js/BasePage.js" />
         <item url="file://$PROJECT_DIR$/public/js/Views.js" />
         <item url="file://$PROJECT_DIR$/public/js/HomePage.js" />
-        <item url="file://$PROJECT_DIR$/public/js/Builder.js" />
         <item url="file://$PROJECT_DIR$/public/js/Application.js" />
-        <item url="file://$PROJECT_DIR$/public/js/Environment.js" />
-        <item url="file://$PROJECT_DIR$/public/js/BasePage.js" />
-        <item url="file://$PROJECT_DIR$/public/js/Container.js" />
+        <item url="file://$PROJECT_DIR$/public/js/Assert.js" />
+        <item url="file://$PROJECT_DIR$/public/js/Service.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/public/js/Builder.js" />
+      <root url="file://$PROJECT_DIR$/public/js/Builder.js" />
+      <root url="file://$PROJECT_DIR$/public/js/Container.js" />
+      <root url="file://$PROJECT_DIR$/public/js/Environment.js" />
+      <root url="file://$PROJECT_DIR$/public/js/Main.js" />
+      <root url="file://$PROJECT_DIR$/public/js/BasePage.js" />
       <root url="file://$PROJECT_DIR$/public/js/Views.js" />
       <root url="file://$PROJECT_DIR$/public/js/HomePage.js" />
-      <root url="file://$PROJECT_DIR$/public/js/Builder.js" />
-      <root url="file://$PROJECT_DIR$/public/js/Environment.js" />
       <root url="file://$PROJECT_DIR$/public/js/Application.js" />
-      <root url="file://$PROJECT_DIR$/public/js/BasePage.js" />
-      <root url="file://$PROJECT_DIR$/public/js/Container.js" />
+      <root url="file://$PROJECT_DIR$/public/js/Assert.js" />
+      <root url="file://$PROJECT_DIR$/public/js/Service.js" />
     </CLASSES>
     <SOURCES />
   </library>
