@@ -15,7 +15,9 @@ namespace core\request
                 parse_str(file_get_contents('php://input'), $this->parameters);
             }
 
-            $this->headers = getallheaders();
+            if (function_exists('getallheaders')) {
+                $this->headers = getallheaders();
+            }
             $this->cookies = $_COOKIE;
             $this->ip = isset($this->headers['X-Forwarded-For']) ? $this->headers['X-Forwarded-For'] : $_SERVER['REMOTE_ADDR'];
 

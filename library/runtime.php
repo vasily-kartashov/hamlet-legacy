@@ -62,7 +62,6 @@ spl_autoload_register(function($className) {
 			'core\\template\\SmartyTemplate' => __DIR__ . '/runtime/core/template/SmartyTemplate.php',
 			'core\\template\\Template' => __DIR__ . '/runtime/core/template/Template.php',
 			'core\\template\\TwigTemplate' => __DIR__ . '/runtime/core/template/TwigTemplate.php',
-			'core\\typescript\\Module' => __DIR__ . '/runtime/core/typescript/Module.php',
 			'core\\typescript\\Parser' => __DIR__ . '/runtime/core/typescript/Parser.php',
 			'Michelf\\Markdown' => __DIR__ . '/runtime/vendors/phpmarkdown-1.2.7/Michelf/Markdown.php',
 			'Michelf\\_MarkdownExtra_TmpImpl' => __DIR__ . '/runtime/vendors/phpmarkdown-1.2.7/Michelf/Markdown.php',

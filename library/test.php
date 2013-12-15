@@ -4,8 +4,10 @@ spl_autoload_register(function($className) {
     static $map;
     if (!is_array($map)) {
         $map = array(
+			'core\\request\\CLIRequestTestCase' => __DIR__ . '/test/core/request/CLIRequestTestCase.php',
+			'core\\request\\PHPRequestTestCase' => __DIR__ . '/test/core/request/PHPRequestTestCase.php',
 			'core\\request\\RequestTestCase' => __DIR__ . '/test/core/request/RequestTestCase.php',
-			'core\\typescript\\ParserTestCase' => __DIR__ . '/test/core/typescript/ParserTestCase.php',
+			'core\\request\\WebRequestTestCase' => __DIR__ . '/test/core/request/WebRequestTestCase.php',
 			'SimpleArguments' => __DIR__ . '/test/vendors/simpletest-1.1.0/arguments.php',
 			'SimpleHelp' => __DIR__ . '/test/vendors/simpletest-1.1.0/arguments.php',
 			'SimpleRealm' => __DIR__ . '/test/vendors/simpletest-1.1.0/authentication.php',

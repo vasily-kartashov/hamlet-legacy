@@ -20,9 +20,14 @@ namespace core\request
          */
         abstract public function getEnvironmentName();
 
+        /**
+         * @param string $suffix
+         * @return bool
+         */
         public function environmentNameEndsWith($suffix)
         {
-            return $suffix === "" || substr($this->getEnvironmentName(), -strlen($suffix)) === $suffix;
+            assert(is_string($suffix));
+            return $suffix == "" || substr($this->getEnvironmentName(), -strlen($suffix)) === $suffix;
         }
 
         /**

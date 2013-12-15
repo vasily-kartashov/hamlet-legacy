@@ -1,6 +1,8 @@
 <component name="ProjectDictionaryState">
   <dictionary name="kartashov">
     <words>
+      <w>addr</w>
+      <w>getallheaders</w>
       <w>memcached</w>
     </words>
   </dictionary>

@@ -34,7 +34,7 @@ namespace core\request
                         $this->parameters = (array) json_decode($argv[$i + 1]);
                         break;
                     case 'path':
-                        $this->path = $argv[$i + 1];
+                        $this->path = urldecode($argv[$i + 1]);
                         break;
                     case 'session':
                         $this->session = (array) json_decode($argv[$i + 1]);

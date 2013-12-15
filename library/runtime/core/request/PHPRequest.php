@@ -5,9 +5,11 @@ namespace core\request
     {
         protected $environment;
 
-        public function __construct($path, $request)
+        public function __construct($path, array $parameters = array())
         {
-            $defaults = array(
+            $this->path = urldecode($path);
+
+            $defaultParameters = array(
                 'headers' => array(),
                 'method' => 'GET',
                 'parameters' => array(),
@@ -17,18 +19,16 @@ namespace core\request
                 'ip' => '127.0.0.1',
                 'environment' => 'localhost',
             );
+            $allParameters = array_merge($parameters, $defaultParameters);
 
-            $request = array_merge($request,$defaults);
-
-            $this->environment = $request['environment'];
-            $this->headers = $request['headers'];
-            $this->method = $request['method'];
-            $this->parameters = $request['parameters'];
-            $this->path = $path;
-            $this->session = $request['session'];
-            $this->locale = $request['locale'];
-            $this->cookies = $request['cookies'];
-            $this->ip = $request['ip'];
+            $this->environment = $allParameters['environment'];
+            $this->headers = $allParameters['headers'];
+            $this->method = $allParameters['method'];
+            $this->parameters = $allParameters['parameters'];
+            $this->session = $allParameters['session'];
+            $this->locale = $allParameters['locale'];
+            $this->cookies = $allParameters['cookies'];
+            $this->ip = $allParameters['ip'];
         }
 
         public function getEnvironmentName()
