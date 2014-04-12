@@ -68,3 +68,9 @@ DOMinatrix
   from the root to the top of the tree through init methods
 * The constructor signatures in the template and TypeScript files should match otherwise the container will compliant.
 
+ToDo
+=====================
+* Fix the TypeScript compilation so that the map & js files are not commited
+* Add watchers for Vagrant box
+* Remove js / css files after they have been merged on the preview task (see that it's not working on dev)
+
