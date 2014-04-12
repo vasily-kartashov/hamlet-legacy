@@ -20,6 +20,7 @@ var Views;
         return Document;
     })();
     Views.Document = Document;
+
     var TodoList = (function () {
         function TodoList(el) {
             this.el = el;
@@ -58,6 +59,7 @@ var Views;
         return TodoList;
     })();
     Views.TodoList = TodoList;
+
     var TextBox = (function () {
         function TextBox(el) {
             this.el = el;

@@ -1,19 +1,24 @@
 ///<reference path="vendor/jquery-2.0.3.d"/>
 
 module Service {
+
     export interface Item {
         id: number;
         uid: number;
         content: string;
         done: boolean;
     }
+
     export class Endpoint {
+
         private headers;
+
         constructor(accessToken: string) {
             this.headers = {
                 Authorization: 'Bearer ' + accessToken
             };
         }
+
         public getItems(callback: (items: Item[]) => void) {
             $.ajax({
                 url: '/items',
@@ -24,6 +29,7 @@ module Service {
                 headers: this.headers
             });
         }
+
         public addItem(content: string, callback: (item: Item) => void) {
             $.ajax({
                 url: '/items',
@@ -37,6 +43,7 @@ module Service {
                 headers: this.headers
             });
         }
+
         public updateStatus(id: number, done: boolean, callback: () => void) {
             $.ajax({
                 url: '/items/' + id.toString() + '/' + (done? 'undo' : 'do'),

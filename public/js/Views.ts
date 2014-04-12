@@ -3,6 +3,7 @@
 /// <reference path="Assert"/>
 
 module Views {
+
     export class Document {
         constructor(private todoList: TodoList, private textBox: TextBox) {}
         public init(accessToken: string) {
@@ -13,6 +14,7 @@ module Views {
 
         }
     }
+
     export class TodoList {
         private service: Service.Endpoint;
         constructor(private el: HTMLUListElement) {}
@@ -46,6 +48,7 @@ module Views {
             }
         }
     }
+
     export class TextBox {
         constructor(private el: HTMLInputElement) {}
         public onEnter(callback: (value: string) => void) {

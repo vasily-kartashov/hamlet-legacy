@@ -14,6 +14,7 @@ sudo cp /vagrant/provision/config/php.ini /etc/php5/apache2
 sudo cp /vagrant/provision/config/php.ini /etc/php5/cli
 sudo cp /vagrant/provision/config/xdebug.ini /etc/php5/apache2/conf.d
 sudo cp /vagrant/provision/config/hosts /etc
+sudo mkdir -p /vagrant/logs
 
 php /vagrant/utils/create-library-loader/create-library-loader.php
 

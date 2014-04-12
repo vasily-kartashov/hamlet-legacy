@@ -104,11 +104,13 @@ module Container {
     }
 
     export class Bean {
+
         private name: string;
         private qualifiedClassName: string;
         private slots: Slot[];
         private instance: any;
         private currentScope: Scope;
+
         constructor(initialisationCode: string, private element: HTMLElement, private parentScope: Scope) {
             group("Bean details");
             log("Initialisation code: " + initialisationCode);
@@ -238,3 +240,4 @@ module Container {
         return globalScope;
     }
 }
+

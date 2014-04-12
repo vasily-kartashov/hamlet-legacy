@@ -17,6 +17,7 @@ var Service;
                 headers: this.headers
             });
         };
+
         Endpoint.prototype.addItem = function (content, callback) {
             $.ajax({
                 url: '/items',
@@ -30,6 +31,7 @@ var Service;
                 headers: this.headers
             });
         };
+
         Endpoint.prototype.updateStatus = function (id, done, callback) {
             $.ajax({
                 url: '/items/' + id.toString() + '/' + (done ? 'undo' : 'do'),

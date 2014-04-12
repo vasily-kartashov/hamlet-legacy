@@ -6,3 +6,4 @@ interface Window {
 }
 
 new Application(new Environment(window.__environment));
+

@@ -12,5 +12,4 @@ class HomePage extends BasePage {
         this.todoList.init(service);
         this.textBox.onEnter((content: string) => this.todoList.addItem(content));
     }
-
 }
