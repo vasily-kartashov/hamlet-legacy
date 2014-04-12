@@ -2,6 +2,7 @@
   <dictionary name="kartashov">
     <words>
       <w>addr</w>
+      <w>ensite</w>
       <w>getallheaders</w>
       <w>memcached</w>
     </words>
