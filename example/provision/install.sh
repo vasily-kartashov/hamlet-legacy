@@ -12,16 +12,20 @@ sudo cp /vagrant/provision/config/dev.conf /etc/apache2/sites-available
 sudo cp /vagrant/provision/config/servername.conf /etc/apache2/conf-available
 sudo cp /vagrant/provision/config/xdebug.ini /etc/php5/apache2/conf.d
 sudo cp /vagrant/provision/config/hosts /etc
+
 sudo mkdir -p /vagrant/logs
 
 php /vagrant/utils/create-library-loader/create-library-loader.php
 
 sudo a2enconf servername
-sudo a2dismod negotiation
+
 sudo a2dissite 000-default
 sudo a2ensite dev
+
+sudo a2dismod negotiation
 sudo a2enmod rewrite
 sudo a2enmod expires
 sudo a2enmod headers
 sudo a2enmod ssl
+
 sudo service apache2 restart
