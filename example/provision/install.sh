@@ -10,8 +10,6 @@ sudo apt-get install apache2 php5 php5-cli php-pear php5-mysql php5-curl unzip m
 
 sudo cp /vagrant/provision/config/dev.conf /etc/apache2/sites-available
 sudo cp /vagrant/provision/config/servername.conf /etc/apache2/conf-available
-sudo cp /vagrant/provision/config/php.ini /etc/php5/apache2
-sudo cp /vagrant/provision/config/php.ini /etc/php5/cli
 sudo cp /vagrant/provision/config/xdebug.ini /etc/php5/apache2/conf.d
 sudo cp /vagrant/provision/config/hosts /etc
 sudo mkdir -p /vagrant/logs
