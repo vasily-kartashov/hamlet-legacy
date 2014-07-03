@@ -2,9 +2,16 @@
   <dictionary name="kartashov">
     <words>
       <w>addr</w>
+      <w>apiclient</w>
+      <w>autoload</w>
+      <w>classmap</w>
       <w>ensite</w>
       <w>getallheaders</w>
+      <w>kartashov</w>
       <w>memcached</w>
+      <w>michelf</w>
+      <w>phoundation</w>
+      <w>phpexcel</w>
     </words>
   </dictionary>
 </component>

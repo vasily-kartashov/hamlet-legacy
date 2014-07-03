@@ -1,3 +1,5 @@
-library/build/core/task/googledrive/tokens.json
-.vagrant
-.sass-cache
+phoundation-core/vendor
+phoundation-core/composer.lock
+phoundation-test-project/vendor
+phoundation-test-project/composer.lock
+phoundation-test-project/.vagrant

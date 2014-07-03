@@ -1,0 +1,11 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/vasily-kartashov/phoundation/tree/master/phoundation-core"
+        }
+    ],
+    "require": {
+        "phoundation/phoundation-core": "dev-master"
+    }
+}

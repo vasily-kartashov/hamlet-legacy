@@ -1,0 +1,23 @@
+{
+    "name": "phoundation/phoundation-core",
+    "type": "library",
+    "description": "Phoundation framework",
+    "keywords": ["framework"],
+    "homepage": "https://github.com/vasily-kartashov/phoundation/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vasily Kartashov",
+            "email": "vasily@kartashov.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "twig/twig": ">=1.12"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    }
+}
