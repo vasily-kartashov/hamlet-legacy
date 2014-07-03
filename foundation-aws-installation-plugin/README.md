@@ -1,0 +1,2 @@
+Foundation AWS installation plugin
+=========================================
